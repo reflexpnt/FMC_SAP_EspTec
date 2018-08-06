@@ -89,11 +89,11 @@ def get_python_image():
 """
 @login_required
 def part_list(request):
-    articulosLOCAL_count = Articulo.objects.filter(local=1).count()
+    articulosLOCAL_count = Articulo.objects.filter(SYS_local=1).count()
     #articulosLOCAL = Articulo.objects.count()
 
     #articulos = Articulo.objects.all()
-    articulos = Articulo.objects.filter(local=1)
+    articulos = Articulo.objects.filter(SYS_local=1)
     articulos_count = Articulo.objects.all().count()
     #Reporter.objects.all().delete()
     return render(request, 'repuestos/part_list.html', {'articulos': articulos, 'articulos_count': articulos_count, 'articulosLOCAL_count': articulosLOCAL_count})
