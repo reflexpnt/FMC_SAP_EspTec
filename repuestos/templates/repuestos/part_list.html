@@ -1,0 +1,64 @@
+<html>
+
+    <head>
+        <title>Fresenius Test</title>
+    </head>
+
+    <body>
+        <ul class="sidebar-nav">
+   {% if user.is_authenticated %}
+     <li>User: {{ user.get_username }}</li>
+     <li><a href="{% url 'logout'%}?next={{request.path}}">Salir</a></li>
+   {% else %}
+     <li><a href="{% url 'login'%}?next={{request.path}}">Ingresar</a></li>
+   {% endif %}
+  </ul>
+        <div>
+            <p><h1>Fresenius Test Site 2</h1><h4>-    {{ articulosLOCAL_count }} articulos Locales de {{ articulos_count }} en DB</h4></p>
+        </div>
+
+        <br><br>
+
+        <table  width="600px"  border="0" >
+       <thead>
+         <tr>
+
+
+           <th> imagen </th>
+           <th> SAP# </th>
+           <th> Titulo </th>
+           <th> Unidad </th>
+           <td> PDF </td>
+
+
+         </tr>
+       </thead>
+
+       <tbody >
+
+        {% for articulo in articulos %}
+        <tr>
+
+
+
+            <!--<td><a href=""><img border="1" alt="imagen" src=../media/{{ articulo.image }} width="50" ></a></td>-->
+            <td><a href=""><img border="1" alt="imagen" src='../media/no_image.png' width="50" ></a></td>
+            <td><h4><a href="{% url 'part_detail' pk=articulo.pk %}">{{ articulo.numeroParte }}</h4></a></td>
+            <td><p>{{ articulo.titulo }}</p></td>
+            <td><p>[ {{ articulo.unidad }} ]</p></td>
+            <td><a href="{% url 'part_pdf' pdf_art_id=articulo.pk %}">PDF</a></td>
+
+
+        </tr>
+        {% endfor %}
+
+        </tbody>
+     </table>
+
+
+
+    </body>
+
+
+
+</html>

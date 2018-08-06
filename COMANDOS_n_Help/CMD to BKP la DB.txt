@@ -1,0 +1,11 @@
+mysqldump -u FreseniusMedical -h FreseniusMedicalCare.mysql.pythonanywhere-services.com 'FreseniusMedical$BaseDatos1' > MedicalBaseDatos1_BKP.sql
+
+
+
+tecnicoUser
+User2018
+
+compraUser
+compraFresenius2018
+
+

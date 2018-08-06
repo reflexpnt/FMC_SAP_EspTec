@@ -1,0 +1,37 @@
+<html>
+
+    <head>
+        <title>Fresenius Test</title>
+    </head>
+
+    <body>
+        <div>
+            <p><h1>Fresenius Test Site 2</h1></p>
+        </div>
+
+        <br><br>
+
+
+
+        {% for articulo in articulos %}
+        <div>
+
+
+
+
+        <h4><a href="{% url 'part_detail' pk=articulo.pk %}">{{ articulo.numeroParte }}</a></h4>
+        [{{ articulo.pk }}]
+        &emsp;&ensp;<a href="{% url 'part_pdf' pdf_art_id=articulo.pk %}">pdf</a>
+        <p>{{ articulo.titulo }}</p>
+        <p>{{ articulo.observation|linebreaks }}</p>
+        <p>Unidad [{{ articulo.unidad }}]</p>
+        <div align="left"><a href=../media/{{ articulo.image }}><img border="0" alt="imagen" src=../media/{{ articulo.image }} width="100" ></a></div>
+        <br>
+        </div>
+        {% endfor %}
+
+    </body>
+
+
+
+</html>

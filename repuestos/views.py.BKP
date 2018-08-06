@@ -1,0 +1,266 @@
+from django.shortcuts import render, get_object_or_404
+#from .models import Image
+from .models import Articulo
+from io import BytesIO
+from django.template.loader import get_template
+import pdfkit
+from django.http import HttpResponse, HttpResponseNotFound
+
+
+from django.core.files.storage import FileSystemStorage
+
+#from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import Table
+from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT, TA_JUSTIFY
+from reportlab.lib.colors import black, white, pink, lightblue, blue
+from reportlab.lib.units import cm
+from reportlab.platypus import BaseDocTemplate, Frame, Paragraph, NextPageTemplate, PageBreak, PageTemplate
+from reportlab.lib.units import inch
+from reportlab.lib.styles import getSampleStyleSheet
+
+
+buff = BytesIO()
+styles=getSampleStyleSheet()
+Elements=[]
+
+doc = BaseDocTemplate('basedoc.pdf',showBoundary=1)
+
+
+def part_list(request):
+    articulos = Articulo.objects.all()
+    return render(request, 'repuestos/part_list.html', {'articulos': articulos})
+
+
+def part_detail(request, pk):
+    compo = get_object_or_404(Articulo , pk=pk)
+    return render(request, 'repuestos/part_detail.html', {'compo': compo})
+
+
+
+
+
+
+
+
+
+def foot1(canvas,doc):
+    canvas.saveState()
+    canvas.setFont('Times-Roman',19)
+    canvas.drawString(inch, 0.75 * inch, "Page %d" % doc.page)
+    canvas.restoreState()
+def foot2(canvas,doc):
+    canvas.saveState()
+    canvas.setFont('Times-Roman',9)
+    canvas.drawString(inch, 0.75 * inch, "Page %d" % doc.page)
+    canvas.restoreState()
+
+
+def part_pdf(request):
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    #response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+    response['Content-Disposition'] = 'inline; filename="testPdf.pdf"'   # para abrirlo con el navegador
+    #normal frame as for SimpleFlowDocument
+    frameT = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id='normal')
+
+    #Two Columns
+    frame1 = Frame(doc.leftMargin, doc.bottomMargin, doc.width/2-6, doc.height, id='col1')
+    frame2 = Frame(doc.leftMargin+doc.width/2+6, doc.bottomMargin, doc.width/2-6,
+               doc.height, id='col2')
+
+    Elements.append(Paragraph("Frame one column, "*500,styles['Normal']))
+    Elements.append(NextPageTemplate('TwoCol'))
+    Elements.append(PageBreak())
+    Elements.append(Paragraph("Frame two columns,  "*500,styles['Normal']))
+    Elements.append(NextPageTemplate('OneCol'))
+    Elements.append(PageBreak())
+    Elements.append(Paragraph("Une colonne",styles['Normal']))
+    doc.addPageTemplates([PageTemplate(id='OneCol',frames=frameT,onPage=foot1), PageTemplate(id='TwoCol',frames=[frame1,frame2],onPage=foot2),
+                      ])
+    #start the construction of the pdf
+    doc.build(Elements)
+
+    response.write(buff.getvalue())
+    buff.close()
+
+    return response
+
+
+
+
+"""
+def part_pdf(request):
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    #response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+    response['Content-Disposition'] = 'inline; filename="testPdf.pdf"'   # para abrirlo con el navegador
+
+    # Create the PDF object, using the response object as its "file."
+    p = canvas.Canvas(response)
+
+    buff = BytesIO()
+    doc = SimpleDocTemplate(buff,
+                            pagesize=A4,
+                            rightMargin=40,
+                            leftMargin=40,
+                            topMargin=60,
+                            bottomMargin=18,
+                            )
+
+
+    clientes = []
+    styles = getSampleStyleSheet()
+    header = Paragraph("Listado de Clientes", styles['Heading1'])
+    clientes.append(header)
+
+
+    p.setFont("Helvetica", 12)
+    p.setStrokeColor(lightblue)
+    p.setFillColor(lightblue)
+    p.drawString(10 * cm, 5 * cm , "OBJ.numeroParte")
+    p.setFillColor(blue)
+    p.setFont("Helvetica", 5)
+    p.drawString(10 * cm, 5 * cm, "10,5 cm")
+
+
+    p.rect(10, 10, 50, 100, stroke=True, fill=True)
+
+    p.setStrokeColor(black)
+    p.setFillColor(black)
+
+    p.drawString(10, 10, "10,10px")
+    p.drawString(50, 100, "50,100px")
+
+    p.setFillColor(blue)
+    p.setStrokeColor(black)
+    p.rect(3 * cm, 3 * cm, 5 * cm, 5 * cm, stroke=True, fill=True) # x,y, with,heigt
+
+    p.setFillColor(black)
+    p.setFont("Helvetica", 6)
+    p.drawString(3 * cm, 3 * cm, "3,3cm")
+    p.drawString((3 + 5) * cm, (3 + 5) * cm, "8,8cm (5cm de lado)")
+
+
+    #OBJ = Articulo.objects.get(numeroParte='ARA370071')
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+
+    #p.drawString(50, 620, OBJ.Titulo)
+    #p.drawString(50, 750, "Especificaciones Técnicas")
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    doc.build(clientes)
+    response.append(buff.getvalue())
+    buff.close()
+
+    return response
+"""
+
+
+
+
+
+"""
+def part_pdf(request):
+
+    response = HttpResponse(content_type='application/pdf')
+    pdf_name = "clientes.pdf"  # llamado clientes
+    # la linea 26 es por si deseas descargar el pdf a tu computadora
+    response['Content-Disposition'] = 'inline; filename=%s' % pdf_name
+    buff = BytesIO()
+    doc = SimpleDocTemplate(buff,
+                            pagesize=A4,
+                            rightMargin=40,
+                            leftMargin=40,
+                            topMargin=60,
+                            bottomMargin=18,
+                            )
+    clientes = []
+    styles = getSampleStyleSheet()
+    header = Paragraph("Listado de Clientes", styles['Heading1'])
+    clientes.append(header)
+    headings = ('numeroParte', 'titulo', 'unidad', 'observation')
+    allclientes = [(art.numeroParte, art.titulo, art.unidad, art.observation) for art in Articulo.objects.all()]
+
+
+    t = Table([headings] + allclientes)
+    t.setStyle(TableStyle(
+        [
+            ('GRID', (0, 0), (3, -1), 1, colors.dodgerblue),
+            ('LINEBELOW', (0, 0), (-1, 0), 2, colors.darkblue),
+            ('BACKGROUND', (0, 0), (-1, 0), colors.dodgerblue)
+        ]
+    ))
+    clientes.append(t)
+    doc.build(clientes)
+    response.write(buff.getvalue())
+    buff.close()
+    return response
+"""
+
+
+
+
+#def part_pdf(request):
+#    # Create the HttpResponse object with the appropriate PDF headers.
+#    response = HttpResponse(content_type='application/pdf')
+#    #response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+#    response['Content-Disposition'] = 'inline; filename="testPdf.pdf"'   # para abrirlo con el navegador
+
+#    # Create the PDF object, using the response object as its "file."
+#    p = canvas.Canvas(response)
+
+#    OBJ = Articulo.objects.get(numeroParte='ARA370071')
+
+#    # Draw things on the PDF. Here's where the PDF generation happens.
+#    # See the ReportLab documentation for the full list of functionality.
+#    p.drawString(10, 300, OBJ.numeroParte)
+#    p.drawString(50, 620, OBJ.Titulo)
+#    p.drawString(50, 750, "Especificaciones Técnicas")
+
+#    # Close the PDF object cleanly, and we're done.
+#    p.showPage()
+#    p.save()
+#    return response
+
+# anda Joya -> Crea un pdf  (testPdf.pdf) y lo da para bajar o abrir con el navegador
+#def part_list(request):
+#    # Create the HttpResponse object with the appropriate PDF headers.
+#    response = HttpResponse(content_type='application/pdf')
+#    #response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+#    response['Content-Disposition'] = 'inline; filename="testPdf.pdf"'   # para abrirlo con el navegador
+
+#    # Create the PDF object, using the response object as its "file."
+#    p = canvas.Canvas(response)
+
+#    # Draw things on the PDF. Here's where the PDF generation happens.
+#    # See the ReportLab documentation for the full list of functionality.
+#    p.drawString(100, 100, "Hello world.")
+
+#    # Close the PDF object cleanly, and we're done.
+#    p.showPage()
+#    p.save()
+#    return response
+
+
+
+# anda Joya -> Baja el pdf (mypdf.pdf) desde miDjangoProyecto/media
+#def part_list(request):
+#    fs = FileSystemStorage()
+#    filename = 'mypdf.pdf'
+#    if fs.exists(filename):
+#        with fs.open(filename) as pdf:
+#            response = HttpResponse(pdf, content_type='application/pdf')
+#            response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"' # para bajarlo con el open/save dialog box
+#            response['Content-Disposition'] = 'inline; filename="mypdf.pdf"'   # para abrirlo con el navegador
+#            return response
+#    else:
+#        return HttpResponseNotFound('The requested pdf was not found in our server.')
