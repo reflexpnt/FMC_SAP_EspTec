@@ -31,8 +31,8 @@ MARGEN_DER  = 0.9 #0.9 #18.6
 GAP_TEXTO_IZQ = 0.3
 GAP_TEXTO_BOTTOM = 0.15
 
-TABLES_ROW_HEIGTH = 0.5
-TEXTO_ROW_HEIGTH = 0.4
+TABLES_ROW_HEIGTH = 0.6
+TEXTO_ROW_HEIGTH = 0.5
 
 HEADER_BARRITA_HEIGHT = 0.1
 HEADER_BARRITA_WIDTH = A4_WIDTH - MARGEN_DER - MARGEN_IZQ
@@ -111,7 +111,7 @@ def sorted_attendee_set(self):
 
 @login_required
 def part_list(request):
-    ordering = ('-SYS_Prioridad',) # The negative sign indicate descendent order
+    ordering = ('SYS_Prioridad',) # The negative sign indicate descendent order
     articulosLOCAL_count = Articulo.objects.filter(SYS_local=1).count()
     #articulosLOCAL = Articulo.objects.count()
 
@@ -123,7 +123,6 @@ def part_list(request):
 
 
 def part_detail(request, pk):
-    #Articulo.objects.filter(pk=979).update(SYS_Prioridad='5')   OJO CON ESTO , es para realizar update en masa
     compo = get_object_or_404(Articulo , pk=pk)
     return render(request, 'repuestos/part_detail.html', {'compo': compo})
 
@@ -283,7 +282,7 @@ def part_pdf(request, pdf_art_id):
     p.setStrokeColor(black)
     p.setFillColor(black)
     p.drawImage(artImagen , (DESC_IMAGE_X * cm)+2, (DESC_IMAGE_Y * cm)+2, width= (( DESC_IMAGE_WIDTH * cm)-4 )  ,  preserveAspectRatio=True, height= (( DESC_IMAGE_HEIGTH * cm)-4 ), mask='auto')
-    p.drawString(( MARGEN_IZQ + MARGEN_IZQ + 0.5) * cm, ( DESC_IMAGE_Y - TEXTO_ROW_HEIGTH - GAP_TEXTO_BOTTOM + GAP_TEXTO_BOTTOM) * cm,  "[" + OBJ.imagen_Pri_Nombre + "]")
+    p.drawString(( MARGEN_IZQ + MARGEN_IZQ + 0.5) * cm, ( DESC_IMAGE_Y - TEXTO_ROW_HEIGTH + GAP_TEXTO_BOTTOM + GAP_TEXTO_BOTTOM) * cm,  "[" + OBJ.imagen_Pri_Nombre + "]")
 
 
 
@@ -399,13 +398,11 @@ def part_pdf(request, pdf_art_id):
         return x, y
 
     # Headers
-    #data_table_hdescripcion = Paragraph('''<b>Descripción</b>''', styleN)
+    data_table_hdescripcion = Paragraph('''<b>Descripción</b>''', styleBH)
 
 
-    # Text DESCRIPCION
-
-    # TABLA CONTROLES/ENSAYOS
-    if OBJ.Descripcion != "" :
+    # Texts
+    if OBJ.Ensayos != "" :
         descripcion_data = Paragraph(OBJ.Descripcion, styleN)
 
 
@@ -423,27 +420,6 @@ def part_pdf(request, pdf_art_id):
         table_DESC.drawOn(p, *coord( DESCRIP_TEXT_X , DESCRIP_TEXT_Y, cm))
 
 
-    """
-    if OBJ.Ensayos != "" :
-        descripcion_data = Paragraph(OBJ.Descripcion, styleN)
-
-
-        data_table_DESC= [ [descripcion_data]]
-
-        table_DESC = Table(data_table_DESC, colWidths=[DESCRIP_BAR_WIDTH * cm])
-
-        table_DESC.setStyle(TableStyle([
-                               #('INNERGRID', (0,0), (-1,-1), 0.25, colors.blue),
-                               ('BOX', (0,0), (-1,-1), 0.25, colors.white),  ]))
-
-
-
-
-
-        table_DESC.wrapOn(p, width, height)
-        table_DESC.drawOn(p, *coord( DESCRIP_TEXT_X , DESCRIP_TEXT_Y, cm))
-    """
-
 
 
     # TABLA CONTROLES/ENSAYOS
@@ -456,9 +432,9 @@ def part_pdf(request, pdf_art_id):
         controEnsayos_table = Table(controEnsayos_data_table, colWidths=[(CONTROLES_BAR_WIDTH - MARGEN_IZQ) * cm])
 
         controEnsayos_table.setStyle(TableStyle([
-                           #('INNERGRID', (0,0), (-1,-1), 0.25, colors.blue),
-                           ('BOX', (0,0), (-1,-1), 0.25, colors.white),
-                           ]))
+                               #('INNERGRID', (0,0), (-1,-1), 0.25, colors.blue),
+                               ('BOX', (0,0), (-1,-1), 0.25, colors.white),
+                               ]))
 
 
         controEnsayos_table.wrapOn(p, width, height)
@@ -474,3 +450,81 @@ def part_pdf(request, pdf_art_id):
 
 
 
+
+"""
+def part_pdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="testPdf.pdf"'   # para abrirlo con el navegador
+
+    buff = BytesIO()
+
+    get_python_image()
+
+
+    doc = SimpleDocTemplate(buff,
+                            pagesize=A4,
+                            rightMargin=40,
+                            leftMargin=40,
+                            topMargin=60,
+                            bottomMargin=18,
+                            )
+    parts = []
+    parts.append(Image(filename))
+    doc.build(parts)
+    response.write(buff.getvalue())
+    buff.close()
+    return response
+"""
+
+
+"""
+def part_pdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="testPdf.pdf"'   # para abrirlo con el navegador
+    doc = SimpleDocTemplate(response,topMargin=2)
+
+    doc.pagesize = landscape(A4)
+    elements = []
+    I = Image('https://images.vexels.com/media/users/3/147375/isolated/preview/67ae8a155355e39d23b955cfc7218d62-2018-3d-logo-verde-by-vexels.png')
+    I.drawHeight =  0.7*inch
+    I.drawWidth = 0.7*inch
+    elements.append(I)
+    doc.build(elements)
+    return response
+"""
+
+
+
+"""
+def part_pdf(request):
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    #response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+    response['Content-Disposition'] = 'inline; filename="testPdf.pdf"'   # para abrirlo con el navegador
+
+    c = canvas.Canvas(response)
+
+
+    c.setFont("Helvetica", 12)
+    c.setStrokeColor(lightblue)
+    c.setFillColor(lightblue)
+    c.drawString(10 * cm, 5 * cm , "OBJ.numeroParte")
+
+
+    a = Image.open("path/to/temp.jpg")
+    a.drawHeight = 2*inch
+    a.drawWidth = 2*inch
+    data=[['1',a],['3','4']]
+  #  c = canvas.Canvas("Reportlabtest.pdf", pagesize=landscape(A4))
+    table = Table(data, colWidths=200, rowHeights=50)
+    table.setStyle(TableStyle([
+                               ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+                               ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+                               ('BACKGROUND',(0,0),(-1,2),colors.lightgrey)
+                               ]))
+    table.wrapOn(c, 200, 400)
+    table.drawOn(c,20,50)
+    c.save()
+    return response
+
+"""

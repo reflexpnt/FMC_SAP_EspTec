@@ -7,8 +7,8 @@ from .models import Image_Art_pri
 
 
 class ArticuloAdmin(admin.ModelAdmin):
-  list_display = ('numeroParte', 'titulo', 'unidad', 'SYS_Prioridad', 'SYS_EsActivo', 'SYS_EsVisible')
-  ordering = ('-SYS_Prioridad',) # The negative sign indicate descendent order
+  list_display = ('numeroParte', 'titulo', 'unidad', 'SYS_Prioridad','SYS_local', 'SYS_EsActivo', 'SYS_EsVisible')
+  ordering = ('-SYS_Prioridad','-SYS_local','numeroParte',) # The negative sign indicate descendent order
 
   def view_homepage_link(self, obj):
     return '<a href="%s" target="_blank">%s</a>' % (obj.numeroParte, obj.numeroParte,)
