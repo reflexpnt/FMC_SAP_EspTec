@@ -19,7 +19,8 @@ from reportlab.platypus import SimpleDocTemplate
 from reportlab.lib.utils import ImageReader
 from django.contrib.auth.decorators import login_required
 
-
+from .forms import ArticuloForm
+from django.shortcuts import redirect
 
 
 A4_WIDTH = 21
@@ -115,7 +116,7 @@ def part_list(request):
     articulosLOCAL_count = Articulo.objects.filter(SYS_local=1).count()
     #articulosLOCAL = Articulo.objects.count()
 
-    #articulos = Articulo.objects.all()
+    #articulos = Articulo.objects.all().order_by('-SYS_Prioridad')
     articulos = Articulo.objects.filter(SYS_local=1)
     articulos_count = Articulo.objects.all().count()
     #Reporter.objects.all().delete()
@@ -128,7 +129,33 @@ def part_detail(request, pk):
     return render(request, 'repuestos/part_detail.html', {'compo': compo})
 
 
+def articulo_new(request):
+    if request.method == "POST":
+            form = ArticuloForm(request.POST)
+            if form.is_valid():
+                compo = form.save(commit=False)
+                #compo.titulo = request.titulo
+                #articulo.published_date = timezone.now()
+                #post.save()
+                return redirect('part_detail', pk=979)
 
+    else:
+        form = ArticuloForm()
+    return render(request, 'repuestos/art_edit.html', {'form': form})
+
+
+def post_edit(request, pk):
+        post = get_object_or_404(Articulo, pk=pk)
+        if request.method == "POST":
+            form = ArticuloForm(request.POST, instance=post)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.titulo = request.user
+                #post.save()
+                return redirect('part_detail', pk=post.pk)
+        else:
+            form = ArticuloForm(instance=post)
+        return render(request, 'repuestos/art_edit.html', {'form': form})
 
 def part_pdf(request, pdf_art_id):
 

@@ -15,11 +15,11 @@ UNIT_CHOICES = (
 )
 
 PRIORITY_CHOICES = (
-    ('5','Urgente'),
-    ('4','Alta'),
-    ('3','Media'),
-    ('2','Normal'),
-    ('1','Baja'),
+    ('5','5_Urgente'),
+    ('4','4_Alta'),
+    ('3','3_Media'),
+    ('2','2_Normal'),
+    ('1','1_Baja'),
 
 )
 
@@ -81,3 +81,52 @@ class Articulo(models.Model):
         def __str__(self):
             return self.numeroParte
             #return [self.name.lower()]
+
+
+
+
+class Gallery(models.Model):
+    title = models.CharField(max_length=200, help_text="Type title of file or image")
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    TIPE = (
+                ('image','Image'),
+                ('file','File or Documents')
+            )
+
+    type_for_file = models.CharField(max_length=200, choices=TIPE, default='image', help_text="Please Choice only One Field, Image or Files")
+    field_uploaded = models.FileField(upload_to='gallery/%Y/%m/%d/')
+
+    IMAGES = ['.jpg', '.png', '.jpeg', '.gif']
+
+    def file_type(self):
+        if self.type_for_file == 'image':
+            import os
+            fx = str(os.path.splitext(str(self.field_uploaded.url))[1])
+            if fx in self.IMAGES:
+                return ('<img height="40" width="60" src="%s"/>' % self.field_uploaded.url)
+        elif self.type_for_file == 'file':
+            return '<img height="40" width="45" src="/static/asset/icons/file-icon.png"/>'
+    file_type.short_description = 'Type'
+    file_type.allow_tags = True
+
+    domain = 'http://127.0.0.1:8000/'
+
+    def get_absolute_url(self):
+        return '<a href="'+self.domain+self.field_uploaded.url+'" target="_blank">'+self.domain+self.field_uploaded.url+'</a>'
+    get_absolute_url.short_description = 'Absolute Url'
+    get_absolute_url.allow_tags = True
+
+    def save(self, *args, **kwargs):
+        super(Gallery, self).save(*args, **kwargs)
+        if not self.file_type():
+            raise Exception('Could not uploaded- is the file type valid?')
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Gallery Entry"
+        verbose_name_plural = "Gallery and Files"
+        ordering = ["-created"]

@@ -54,6 +54,24 @@ Compressing objects: 100% (162/162), done.
 
 
 
+delete remote branch
+
+$   git push --delete origin ver1
+
+_____________________________________________
+$ git push --delete <remote_name> <branch_name>
+$ git branch -d <branch_name>
+Note that in most cases the remote name is origin.
+
+Delete Local Branch
+To delete the local branch use one of the following:
+
+$ git branch -d branch_name
+$ git branch -D branch_name
+________________________________________________
+
+
+
 
 
 
