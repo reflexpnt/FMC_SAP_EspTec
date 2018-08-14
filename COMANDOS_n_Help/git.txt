@@ -15,6 +15,7 @@ Untracked files:
 ...
 (miVirtualFMC_1) 13:45 ~/miDjangoProyecto$ >git add --all
 
+
 ...
 On branch master
 Initial commit
