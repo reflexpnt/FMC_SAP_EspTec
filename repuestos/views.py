@@ -128,12 +128,12 @@ def part_detail(request, pk):
     compo = get_object_or_404(Articulo , pk=pk)
     return render(request, 'repuestos/part_detail.html', {'compo': compo})
 
-
+"""
 def articulo_new(request):
     if request.method == "POST":
-            form = ArticuloForm(request.POST)
-            if form.is_valid():
-                compo = form.save(commit=False)
+            form_instance = ArticuloForm(request.POST)
+            if form_instance.is_valid():
+                compo = form_instance.save(commit=False)
                 #compo.titulo = request.titulo
                 #articulo.published_date = timezone.now()
                 #post.save()
@@ -142,20 +142,32 @@ def articulo_new(request):
     else:
         form = ArticuloForm()
     return render(request, 'repuestos/art_edit.html', {'form': form})
+"""
 
-
-def post_edit(request, pk):
-        post = get_object_or_404(Articulo, pk=pk)
+def articulo_edit(request, pk ):
+        art_instance = get_object_or_404(Articulo, pk=pk)
         if request.method == "POST":
-            form = ArticuloForm(request.POST, instance=post)
+            form = ArticuloForm(request.POST, instance = art_instance)
             if form.is_valid():
-                post = form.save(commit=False)
-                post.titulo = request.user
-                #post.save()
-                return redirect('part_detail', pk=post.pk)
+                art_instance = form.save(commit=False)
+                #art_instance.titulo = request.user
+                #art_instance.titulo =  request.titulo # add User.id as string
+                #art_instance.titulo = "TEST2" #validated_data.get('titulo', instance.titulo) # anda posta
+                art_instance.titulo = art_instance.titulo
+                art_instance.unidad = art_instance.unidad
+                art_instance.save()
+                return redirect('part_detail', pk=art_instance.pk)
         else:
-            form = ArticuloForm(instance=post)
+            form = ArticuloForm(instance=art_instance)
         return render(request, 'repuestos/art_edit.html', {'form': form})
+
+
+
+
+
+
+
+
 
 def part_pdf(request, pdf_art_id):
 

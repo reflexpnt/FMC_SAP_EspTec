@@ -8,8 +8,8 @@ urlpatterns = [
     url(r'^pdf/(?P<pdf_art_id>[0-9]+)/$', views.part_pdf, name='part_pdf'),
     url(r'^(?P<pk>[0-9]+)/$', views.part_detail, name='part_detail'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
-    url(r'^art/new/$', views.articulo_new, name='articulo_new'),
-    url(r'^post/(?P<pk>[0-9]+)/edit/$', views.post_edit, name='post_edit'),
+#    url(r'^art/new/$', views.articulo_new, name='articulo_new'),
+    url(r'^art/(?P<pk>[0-9]+)/edit/$', views.articulo_edit, name='articulo_edit'),
 
 
 ]

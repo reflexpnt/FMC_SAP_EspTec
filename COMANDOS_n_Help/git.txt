@@ -42,7 +42,7 @@ Changes to be committed:
 
 (miVirtualFMC_1) 13:45 ~/miDjangoProyecto (master)$  git remote add origin https://github.com/reflexpnt/FMC_SAP_EspTec.git   ( esto fue creado en GitHub como repo nueva)
 
-(miVirtualFMC_1) 13:45 ~/miDjangoProyecto (master)$ git push -u origin master
+(miVirtualFMC_1) 13:45 ~/miDjangoProyecto (master)$ data
 
 ...
 Username for 'https://github.com': reflexpnt
