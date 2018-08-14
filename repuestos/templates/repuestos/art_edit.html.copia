@@ -26,13 +26,6 @@
 
     <form action="" method="POST" class="post-form">{% csrf_token %}
 
-{{ form.as_ul }}
-  <div><br><br>
-     </div>
-       <div><br><br>
-     </div>
-
-
     <table style="height: 50px; margin-left: auto; margin-right: auto;" border="0" width="1200" cellspacing="0" cellpadding="5">
     <tbody>
     <tr>
@@ -55,8 +48,8 @@
     <table style="height: 5px; width: 1200px; margin-left: auto; margin-right: auto;" border="0" width="1200" cellspacing="0" cellpadding="3">
     <tbody>
     <tr >
-    <td   width=320px bgcolor ="#0000e6"><font color="white"><font size="6"><strong>SAP:&nbsp;{{ articulo_instance.numeroParte }}</strong></td>
-    <td   width=810px bgcolor ="#0000e6"><font color="white"><font size="6">Titulo:&nbsp;{{ articulo_instance.titulo }}</td>
+    <td   width=320px bgcolor ="#0000e6"><font color="white"><font size="6"><strong>SAP:&nbsp;{{ form.numeroParte }}</strong></td>
+    <td   width=810px bgcolor ="#0000e6"><font color="white"><font size="6">Titulo:&nbsp;{{ form.titulo }}</td>
     <td bgcolor = "#0000e6"><button type="submit" class="save btn btn-default">Guardar</button></td>
     </tr>
 
@@ -131,7 +124,7 @@
     <tbody>
     <tr >
     <td width=5px >&nbsp;</td>
-    <td class="special" width=300px valign="center"><img  width="300" src="http://freseniusmedicalcare.pythonanywhere.com/media/{{ articulo_instance.imagen_Pri_Nombre }}"</td>
+    <td class="special" width=300px valign="center"><img  width="300" src=http://freseniusmedicalcare.pythonanywhere.com/media/{{ form.imagen_Pri_Nombre }}</td>
     <td width=5px >&nbsp;</td>
     <td valign="top" align="left">{{ form.Descripcion }}</td>
 

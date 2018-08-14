@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Fresenius Test - Edición</title>
+
+    <style>
+    table {
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 12px;
+    }
+
+    th {
+    cursor: pointer;
+    background-color: #80aaff
+    }
+
+    th, td {
+    text-align: left;
+    padding: 3px;
+    }
+
+    tr:nth-child(even) {
+    background-color: #f2f2f2
+    }
+
+
+    td.a {
+    font-size: 12px;
+    }
+    </style>
+
+</head>
+
+
+
+
+<body>
+
+
+        <h1>Articulo - Edición</h1>
+        <form action="" method="POST" class="post-form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Guardar</button>
+        </form>
+
+
+</body>
+
+
+
+</html>

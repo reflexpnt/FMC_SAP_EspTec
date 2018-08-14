@@ -150,7 +150,7 @@ def articulo_edit(request, pk ):
             form = ArticuloForm(request.POST, instance = art_instance)
             if form.is_valid():
                 art_instance = form.save(commit=False)
-                #art_instance.titulo = request.user
+                art_instance.user = request.user
                 #art_instance.titulo =  request.titulo # add User.id as string
                 #art_instance.titulo = "TEST2" #validated_data.get('titulo', instance.titulo) # anda posta
                 art_instance.titulo = art_instance.titulo
@@ -159,7 +159,7 @@ def articulo_edit(request, pk ):
                 return redirect('part_detail', pk=art_instance.pk)
         else:
             form = ArticuloForm(instance=art_instance)
-        return render(request, 'repuestos/art_edit.html', {'form': form})
+        return render(request, 'repuestos/art_edit.html', {'form': form, 'articulo_instance': art_instance})
 
 
 
