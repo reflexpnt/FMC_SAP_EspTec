@@ -1,7 +1,7 @@
 <html>
 
     <head>
-        <title>Fresenius Test</title>
+        <title>Fresenius - Detalle Articulo</title>
 
         <style>
 
@@ -16,6 +16,11 @@
         </style>
 
     </head>
+
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
 
     <body>
 
@@ -48,9 +53,7 @@
     <tr >
     <td   width=320px bgcolor ="#0000e6"><font color="white"><font size="6"><strong>{{ compo.numeroParte }}</strong></td>
     <td   width=810px bgcolor ="#0000e6"><font color="white"><font size="6">{{ compo.titulo }}</td>
-    <td align="center" valign="center" bgcolor = "#0000e6"> <div>
-        <a href="{% url 'articulo_edit' pk=compo.pk %}"><img border="0" alt="edit" src=../media/edit_icon1.png width="25" ></a>
-        </div>&nbsp;</td>
+    <td align="center" valign="center" bgcolor = "#0000e6"> <div valign="bottom"><a href="{% url 'articulo_edit' pk=compo.pk %}"><img valign="bottom" border="0" alt="edit" src=../media/edit_icon2_white.png width="28" ></a></div>&nbsp;</td>
     </tr>
 
     </tbody>
@@ -83,25 +86,42 @@
     <td style="width: 10px;"><strong>Marca</strong></td>
     <td style="width: 687px;">{{ compo.marca }}</td>
     <td style="width: 10px;"><strong>Reemplazable</strong></td>
-    <td style="width: 20px;"><input type="checkbox"  onclick="return false;" />&nbsp;</td>
+        {% if compo.Reemplazable ==  True %}
+            <td align="center" style="width: 10px;"><strong>SI</strong></td>
+        {% else %}
+            <td align="center" style="width: 10px;"><strong>NO</strong></td>
+        {% endif %}
     </tr>
     <tr>
     <td style="width: 10px;"><strong>Mod./# Parte</strong></td>
     <td style="width: 687px;">{{ compo.modelo_NumParte }}</td>
     <td style="width: 10px;"><strong>Fab.a Pedido</strong></td>
-    <td style="width: 20px;"><input type="checkbox"  onclick="return false;" />&nbsp;</td>
+        {% if compo.Fab_a_Pedido ==  True %}
+            <td align="center" style="width: 10px;"><strong>SI</strong></td>
+        {% else %}
+            <td align="center" style="width: 10px;"><strong>NO</strong></td>
+        {% endif %}
     </tr>
     <tr>
     <td style="width: 10px;"><strong>Linea</strong></td>
     <td style="width: 687px;">{{ compo.linea }}</td>
     <td style="width: 10px;"><strong>Plano</strong></td>
-    <td style="width: 20px;"><input type="checkbox"  onclick="return true;" />&nbsp;</td>
+        {% if compo.Plano ==  True %}
+            <td align="center" style="width: 10px;"><strong>SI</strong></td>
+        {% else %}
+            <td align="center" style="width: 10px;"><strong>NO</strong></td>
+        {% endif %}
+
+
+
+
+
     </tr>
     <tr>
     <td style="width: 10px;"><strong>Comentarios</strong></td>
     <td style="width: 687px;">{{ compo.comentario }}</td>
-    <td style="width: 10px;">&nbsp;</td>
-    <td style="width: 20px;">&nbsp;</td>
+    <td style="width: 10px;"><strong>Unidad</strong></td>
+    <td align="center" style="width: 20px;">&nbsp;[&nbsp;{{ compo.unidad }}&nbsp;]</td>
     </tr>
     </tbody>
     </table>
@@ -229,6 +249,23 @@
     </tr>
     </tbody>
     </table>
+
+    <div><br><br>
+     </div>
+    <div><br><br>
+     </div>
+    <div><br><br>
+     </div>
+    <div><br><br>
+     </div>
+    <div><br><br>
+     </div>
+
+
+
+
+
+
 
 
 

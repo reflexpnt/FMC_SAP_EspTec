@@ -153,8 +153,8 @@ def articulo_edit(request, pk ):
                 art_instance.user = request.user
                 #art_instance.titulo =  request.titulo # add User.id as string
                 #art_instance.titulo = "TEST2" #validated_data.get('titulo', instance.titulo) # anda posta
-                art_instance.titulo = art_instance.titulo
-                art_instance.unidad = art_instance.unidad
+                #art_instance.titulo = art_instance.titulo
+                #art_instance.unidad = art_instance.unidad
                 art_instance.save()
                 return redirect('part_detail', pk=art_instance.pk)
         else:

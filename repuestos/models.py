@@ -48,12 +48,10 @@ class Articulo(models.Model):
         SYS_ESTADO = models.CharField(max_length=10, choices = STATUS_CHOICES, default='Inicial')
 
         ordering = ['SYS_Prioridad']
-        numeroParte = models.CharField(max_length=15)
-        titulo = models.CharField(max_length=250, blank=False )
+        numeroParte = models.CharField(max_length=15 , blank=False, default="ARA"  )
+        titulo = models.CharField(max_length=250, blank=False, default="sin título" )
         unidad = models.CharField(max_length=4, choices=UNIT_CHOICES, default='UN')
-        #observation = models.CharField(max_length=250, blank=True, null=True)
         Descripcion = models.TextField(max_length=500, blank=True,  default="")
-        #datasheet = models.CharField(max_length=250, blank=True, null=True, default="")
 
 
 

@@ -10,10 +10,15 @@
 <style>
 table {
     border-spacing: 0;
-    width: 100%;
+    width: 1000px;
     border: 1px solid #ddd;
-    font-size: 12px;
-}
+    font-size: 14px;
+    margin-left:15%;
+    margin-right:15%;
+    }
+
+
+
 
 th {
     cursor: pointer;
@@ -33,13 +38,15 @@ tr:nth-child(even) {
 td.a {
     font-size: 12px;
 }
+
 </style>
 
 
 
     </head>
 
-
+     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 
 
     <body>
@@ -87,12 +94,12 @@ td.a {
 
 
             <!--<td><a href=""><img border="1" alt="imagen" src=../media/{{ articulo.image }} width="50" ></a></td>-->
-            <td><a href=../media/{{ articulo.imagen_pri }}><img border="0" alt="imagen" src=../media/{{ articulo.imagen_pri }} width="40" ></a></td>
+            <td><a href=../media/{{ articulo.imagen_pri }}><img border="0" alt="imagen" src=../media/{{ articulo.imagen_pri }} width="50" ></a></td>
             <td><h4><a href="{% url 'part_detail' pk=articulo.pk %}">{{ articulo.numeroParte }}</h4></a></td>
-            <td class="a" ><p>{{ articulo.titulo }}</p></td>
+            <td><p>{{ articulo.titulo }}</p></td>
             <td><p>[ {{ articulo.unidad }} ]</p></td>
-            <td><a href="{% url 'part_pdf' pdf_art_id=articulo.pk %}"><img border="0" alt="PDF" src=../media/datasheet.png width="15" ></a></td>
-            <td><a href="{% url 'articulo_edit' pk=articulo.pk %}"><img border="0" alt="edit" src=../media/edit_icon1.png width="15" ></a></td>
+            <td><a href="{% url 'part_pdf' pdf_art_id=articulo.pk %}"><img border="0" alt="PDF" src=../media/datasheet.png width="20" ></a></td>
+            <td><a href="{% url 'articulo_edit' pk=articulo.pk %}"><img border="0" alt="edit" src=../media/edit_icon2.png width="15" ></a></td>
 
 
         </tr>
@@ -102,6 +109,10 @@ td.a {
      </table>
 
 
+    <div><br><br>
+     </div>
+    <div><br><br>
+     </div>
 
 
 
