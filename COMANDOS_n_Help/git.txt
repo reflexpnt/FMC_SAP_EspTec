@@ -32,6 +32,8 @@ Changes to be committed:
 
 (miVirtualFMC_1) 13:45 ~/miDjangoProyecto$ >git commit -m "First commit"
 
+
+
 ...
  create mode 100644 COMANDOS_n_Help/CMD to BKP la DB.txt
  create mode 100644 COMANDOS_n_Help/mysql.txt
