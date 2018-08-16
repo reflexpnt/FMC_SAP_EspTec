@@ -13,8 +13,8 @@ table {
     width: 1000px;
     border: 1px solid #ddd;
     font-size: 14px;
-    margin-left:15%;
-    margin-right:15%;
+    margin-left:auto;
+    margin-right:auto;
     }
 
 
@@ -59,15 +59,34 @@ td.a {
         {% endif %}
         </ul>
 
-        <div>
-            <p><h1>Fresenius Test Site 5</h1><h4>-    {{ articulosLOCAL_count }} articulos Locales de {{ articulos_count }} en DB</h4></p>
 
-        </div>
-
+    <div><br><br>
+    </div>
 
 
 
-        <br><br>
+    <table style="height: 50px; margin-left: auto; margin-right: auto; width: 1200px;" border="0" cellspacing="0" cellpadding="5">
+    <tbody>
+    <tr>
+    <td width=200px><a href="{% url 'index' %}"><img src="http://reflexpnt.pythonanywhere.com/media/GUI_pictures/logoFresenius.jpg" width="200" height="42" /></a></td>
+    <td  align="center"   width=1000px></td>
+    <td valign="bottom"><strong>v0.1</strong></td>
+    </tr>
+    </tbody>
+    </table>
+
+    <table style="height: 5px; width: 1200px; margin-left: auto; margin-right: auto;" border="0" width="1200" cellspacing="0" cellpadding="0">
+    <tbody>
+    <tr >
+    <td   width=320px bgcolor ="#0000e6"><font color="white">Fresenius Lista Repuestos</td>
+    <td   width=550px bgcolor ="#0000e6"><font color="white"></td>
+    <td bgcolor = "#0000e6"><font color="white">{{ articulosLOCAL_count }} articulos Locales de {{ articulos_count }} en DB</td>
+    </tr>
+
+    </tbody>
+    </table>
+
+    <div></div><br>
 
         <table  id="myTable" width="600px" class="tablesorter"  border="0" >
        <thead>
@@ -88,18 +107,21 @@ td.a {
        <tbody >
 
 
+
+
+
         {% for articulo in articulos|dictsort:"SYS_Prioridad" %}
         <tr>
 
 
 
             <!--<td><a href=""><img border="1" alt="imagen" src=../media/{{ articulo.image }} width="50" ></a></td>-->
-            <td><a href=../media/{{ articulo.imagen_pri }}><img border="0" alt="imagen" src=../media/{{ articulo.imagen_pri }} width="50" ></a></td>
+            <td><a href="../media/{{ articulo.imagen_pri }}"><img border="0" alt="imagen" src=../media/{{ articulo.imagen_pri }} width="50" ></a></td>
             <td><h4><a href="{% url 'part_detail' pk=articulo.pk %}">{{ articulo.numeroParte }}</h4></a></td>
             <td><p>{{ articulo.titulo }}</p></td>
             <td><p>[ {{ articulo.unidad }} ]</p></td>
-            <td><a href="{% url 'part_pdf' pdf_art_id=articulo.pk %}"><img border="0" alt="PDF" src=../media/datasheet.png width="20" ></a></td>
-            <td><a href="{% url 'articulo_edit' pk=articulo.pk %}"><img border="0" alt="edit" src=../media/edit_icon2.png width="15" ></a></td>
+            <td><a target="_blank" href="{% url 'part_pdf' pdf_art_id=articulo.pk %}"><img border="0" alt="PDF" src=../media/datasheet.png width="20" ></a></td>
+            <td><a target="_blank" href="{% url 'articulo_edit' pk=articulo.pk %}"><img border="0" alt="edit" src=../media/edit_icon2.png width="15" ></a></td>
 
 
         </tr>

@@ -10,10 +10,16 @@ from django.contrib import admin
 from . import models
 
 
+class UsuarioAdmin(admin.ModelAdmin):
+    list_display = ('username', 'first_name', 'last_name', 'is_active',)
+    ordering = ('first_name',) # The negative sign indicate descendent order
+    search_fields = ('username', 'first_name', 'last_name',  )
+
 
 class ArticuloAdmin(admin.ModelAdmin):
   list_display = ('numeroParte', 'titulo', 'unidad', 'SYS_Prioridad','SYS_local', 'SYS_EsActivo', 'SYS_EsVisible')
   ordering = ('-SYS_Prioridad','-SYS_local','numeroParte',) # The negative sign indicate descendent order
+  search_fields = ('numeroParte', 'titulo',  )
 
   def view_homepage_link(self, obj):
     return '<a href="%s" target="_blank">%s</a>' % (obj.numeroParte, obj.numeroParte,)
@@ -36,7 +42,7 @@ class GalleryAdmin(admin.ModelAdmin):
 
 
 ### =============================================================================================
-admin.site.register(Articulo, ArticuloAdmin)
+admin.site.register(Articulo, ArticuloAdmin, UsuarioAdmin)
 #admin.site.register(Articulo)
 admin.site.register(Image_Art_pri)
 
