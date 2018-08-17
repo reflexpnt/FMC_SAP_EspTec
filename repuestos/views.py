@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ArticuloForm
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
-
+from django.db.models import F
 
 A4_WIDTH = 21
 A4_HEIGHT = 29.7
@@ -114,22 +114,31 @@ def sorted_attendee_set(self):
 @login_required
 def part_list(request):
     ordering = ('-SYS_Prioridad',) # The negative sign indicate descendent order
-    articulosLOCAL_count = Articulo.objects.filter(SYS_local=1).count()
+
+    #Articulo.objects.all().update(SYS_dataEntryAuthor=F('SYS_dataEntryAuthor'))
     #articulosLOCAL = Articulo.objects.count()
 
     #articulos = Articulo.objects.all().order_by('-SYS_Prioridad')
+
+    articulosLOCAL_count = Articulo.objects.filter(SYS_local=1).count()
     articulos = Articulo.objects.filter(SYS_local=1)
     articulos_count = Articulo.objects.all().count()
     #Reporter.objects.all().delete()
     return render(request, 'repuestos/part_list.html', {'articulos': articulos, 'articulos_count': articulos_count, 'articulosLOCAL_count': articulosLOCAL_count})
 
+
+
+
 @login_required
 def part_detail(request, pk):
     #Articulo.objects.filter(pk=979).update(SYS_Prioridad='5')   OJO CON ESTO , es para realizar update en masa
-
+    #Articulo.objects.all().update(SYS_dataEntryAuthor = "adminFresenius")   #OJO CON ESTO , es para realizar update en masa
     #Articulo.objects.filter(a=true).exclude(pk=979)
     compo = get_object_or_404(Articulo , pk=pk)
     return render(request, 'repuestos/part_detail.html', {'compo': compo})
+
+
+
 
 """
 def articulo_new(request):
@@ -146,6 +155,8 @@ def articulo_new(request):
         form = ArticuloForm()
     return render(request, 'repuestos/art_edit.html', {'form': form})
 """
+
+
 @login_required
 def articulo_edit(request, pk ):
         art_instance = get_object_or_404(Articulo, pk=pk)
@@ -154,6 +165,7 @@ def articulo_edit(request, pk ):
             if form.is_valid():
                 art_instance = form.save(commit=False)
                 art_instance.user = request.user
+                #art_instance.SYS_dataEntryAuthor = request.user
                 #art_instance.titulo =  request.titulo # add User.id as string
                 #art_instance.titulo = "TEST2" #validated_data.get('titulo', instance.titulo) # anda posta
                 #art_instance.titulo = art_instance.titulo
@@ -179,9 +191,12 @@ def part_pdf(request, pdf_art_id):
     nombreArchivo = OBJ.numeroParte + ".pdf"
 
     Usuario_editor = None
+    Usuario_editor_nombre = None
+    Usuario_editor_email = None
     if request.user.is_authenticated():
         Usuario_editor = str( request.user.username )
-
+        Usuario_editor_nombre =  str( request.user.first_name ) + " " + str( request.user.last_name )
+        Usuario_editor_email =  str( request.user.email )
 
 
     #Usuario_editor = request.user
@@ -421,11 +436,18 @@ def part_pdf(request, pdf_art_id):
     p.rect((MARGEN_IZQ) * cm, APROVATION_TABLE_Y * cm,  APROVATION_TABLE_WIDTH * cm, APROVATION_TABLE_HEIGTH * cm, stroke=True, fill=False)
     p.rect( (MARGEN_IZQ) * cm, APROVATION_TABLE_Y * cm,  APROVATION_TABLE_COL_IZQ_WIDTH * cm, APROVATION_TABLE_HEIGTH * cm, stroke=True, fill=False) # tabla cuadro izq
     p.rect( (MARGEN_IZQ + APROVATION_TABLE_COL_DER_WIDTH + APROVATION_TABLE_COL_DER_WIDTH) * cm, APROVATION_TABLE_Y * cm,  APROVATION_TABLE_COL_DER_WIDTH * cm, APROVATION_TABLE_HEIGTH * cm, stroke=True, fill=False) # tabla cuadro der_2
-    #p.drawString(1.8 * cm, 3.4 * cm, "Preparó:")
-    p.drawString(1.8 * cm, 3.4 * cm, Usuario_editor)
+    p.setFont("Helvetica-Bold", 10)
+    p.drawString(1.8  * cm, 3.4 * cm,  "Preparó:")
+    p.drawString(8.0  * cm, 3.4 * cm,  "Revisó:")
+    p.drawString(14.2 * cm, 3.4 * cm,  "Aprobó:")
 
-    p.drawString(8.0 * cm, 3.4 * cm, "Revisó:")
-    p.drawString(14.2 * cm, 3.4 * cm, "Aprobó:")
+    p.setFont("Helvetica", 10)
+    p.drawString(1.8 * cm, (3.4 - (1 * TEXTO_ROW_HEIGTH)) * cm, Usuario_editor_nombre )
+    p.drawString(1.8 * cm, (3.4 - (2 * TEXTO_ROW_HEIGTH)) * cm,  Usuario_editor_email       )
+    p.drawString(1.8 * cm, (3.4 - (3 * TEXTO_ROW_HEIGTH)) * cm, "[" + Usuario_editor + "]"  )
+
+
+
     # TABLES_ROW_HEIGTH
 
 

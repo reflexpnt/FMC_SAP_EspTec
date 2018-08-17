@@ -31,12 +31,21 @@
 
 
 
+{% if articulo_instance.SYS_ESTADO ==  "enEdicion" %}
+     articulo_instance.SYS_dataEntryAuthor =  user
+{% else %}
+        neno
+{% endif %}
+
+
+
+
     <table class="w3-table-all">
     <thead>
     <tr class="w3-pale-red">
-    <th>&nbsp;User: {{ user.get_username }}</th>
+    <th>&nbsp;User: {{ user.get_username }} {{ articulo_instance.SYS_dataEntryAuthor.username }}</th>
     <th class="w3-center"><h4 class="w3-opacity">Pag. de Edición</h4></th>
-    <th><strong>Estado:</strong>&nbsp;{{ articulo_instance.SYS_ESTADO }}</th>
+    <th><strong>Estado:&nbsp;</strong>&nbsp;{{ articulo_instance.SYS_ESTADO }}<h4>&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]</h4></th>
     </tr>
     </thead>
     </table>
@@ -57,6 +66,10 @@
 
 
      <div></div><br>
+
+
+
+    <form action="" method="POST" class="post-form">{% csrf_token %}
 
 
 
@@ -104,7 +117,7 @@
     </tr>
     <tr>
     <td style="width: 10px;"><strong>Linea</strong></td>
-    <td style="width: 687px;" >{{ form.linea }}</td>
+    <td style="width: 687px;" >&nbsp;{{ form.linea }}</td>
     <td style="width: 10px;"><strong>Plano</strong></td>
     <td align="center"  style="width: 20px;">{{ form.Plano }}&nbsp;</td>
     </tr>
@@ -276,6 +289,7 @@
 {{ form.SYS_Prioridad }}
 
 {{ form.SYS_ESTADO }}
+
 
         </form>
 

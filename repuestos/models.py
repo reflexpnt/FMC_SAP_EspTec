@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django import forms
 from django import template
 from django.db.models.functions import Lower
@@ -26,7 +27,7 @@ PRIORITY_CHOICES = (
 STATUS_CHOICES = (
     ('Aprobado','Aprobado'),
     ('Cerrado','Cerrado'),
-    ('en Edición', 'en Edición'),
+    ('enEdicion', 'en Edición'),
     ('Inicial','Inicial'),
    )
 
@@ -46,6 +47,7 @@ class Articulo(models.Model):
         SYS_EsActivo = models.BooleanField(  default=True)
         SYS_EsVisible = models.BooleanField(   default=True)
         SYS_ESTADO = models.CharField(max_length=10, choices = STATUS_CHOICES, default='Inicial')
+        SYS_dataEntryAuthor = models.ForeignKey( User, related_name='data_entries',  blank=True, null=True)
 
         ordering = ['SYS_Prioridad']
         numeroParte = models.CharField(max_length=15 , blank=False, default="ARA"  )

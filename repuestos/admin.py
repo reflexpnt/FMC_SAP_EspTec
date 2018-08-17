@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Articulo
 #from .models import Image
 from .models import Image_Art_pri
+from django.contrib.auth.models import User
 ### ==================
 ### admin.py
 ### ==================
@@ -10,10 +11,6 @@ from django.contrib import admin
 from . import models
 
 
-class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('username', 'first_name', 'last_name', 'is_active',)
-    ordering = ('first_name',) # The negative sign indicate descendent order
-    search_fields = ('username', 'first_name', 'last_name',  )
 
 
 class ArticuloAdmin(admin.ModelAdmin):
@@ -42,7 +39,8 @@ class GalleryAdmin(admin.ModelAdmin):
 
 
 ### =============================================================================================
-admin.site.register(Articulo, ArticuloAdmin, UsuarioAdmin)
+admin.site.register(Articulo, ArticuloAdmin)
+
 #admin.site.register(Articulo)
 admin.site.register(Image_Art_pri)
 
