@@ -48,6 +48,7 @@ class Articulo(models.Model):
         SYS_EsVisible = models.BooleanField(   default=True)
         SYS_ESTADO = models.CharField(max_length=10, choices = STATUS_CHOICES, default='Inicial')
         SYS_dataEntryAuthor = models.ForeignKey( User, related_name='data_entries',  blank=True, null=True)
+        SYS_locked = models.BooleanField(blank=True,  default=False)
 
         ordering = ['SYS_Prioridad']
         numeroParte = models.CharField(max_length=15 , blank=False, default="ARA"  )

@@ -1,120 +1,61 @@
-<!doctype html>
 <html>
 
-
-
-
     <head>
-        <title>Fresenius Lista Respuestos</title>
+        <title>Fresenius - Detalle Articulo</title>
 
-    <style>
-
-    table {
-        border-spacing: 0;
-        width: 1200px;
-        border: 1px solid #ddd;
-        font-size: 14px;
-        margin-left:auto;
-        margin-right:auto;
-        }
-
-    th {
-        cursor: pointer;
-        background-color: #80aaff
-    }
-
-    th, td {
-        text-align: left;
-        padding: 3px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f2f2f2
-    }
-
-    td.a {
-        font-size: 12px;
-    }
-
-    </style>
+        <style>
 
 
-    <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
+            .special div {
+            border: 2px solid #f00;
+            margin: -2px;
+            }
+
+
+
+        </style>
 
     </head>
 
-
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 
 
 
     <body>
 
-
-
-<nav class="navbar navbar-expand-lg navbar navbar-light" style="background-color: #e3f2fd;">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="{% url 'index' %}"><img src="http://freseniusmedicalcare.pythonanywhere.com/media/frese_logo.png" width="200" height="42" /></a>
-
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-
-      </li>
-      <li class="nav-item">
-
-      </li>
-      <li class="nav-item">
-
-      </li>
-    </ul>
-
-
-
-
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="sidebar-nav">
         {% if user.is_authenticated %}
-        <ul><a class="navbar-brand" href="{% url 'index' %}"><img src="http://freseniusmedicalcare.pythonanywhere.com/media/user_icon.png" width="20" /></a>{{ user.get_username }}&nbsp;<a href="{% url 'logout'%}?next={{request.path}}">Salir</a></ul>
-
+        <li>User: {{ user.get_username }}</li>
+        <li><a href="{% url 'logout'%}?next={{request.path}}">Salir</a></li>
         {% else %}
-        <ul><a href="{% url 'login'%}?next={{request.path}}">Ingresar</a></ul>
+        <li><a href="{% url 'login'%}?next={{request.path}}">Ingresar</a></li>
         {% endif %}
         </ul>
 
-  </div>
-</nav>
+
+
+    <div><br><br>
+     </div>
 
 
 
-
-
-
-
-   <!-- <table style="height: 50px; margin-left: auto; margin-right: auto; width: 1200px;" border="0" cellspacing="0" cellpadding="5">
+    <table style="height: 50px; margin-left: auto; margin-right: auto; width: 1200px;" border="0" cellspacing="0" cellpadding="5">
     <tbody>
     <tr>
     <td width=200px><a href="{% url 'index' %}"><img src="http://reflexpnt.pythonanywhere.com/media/GUI_pictures/logoFresenius.jpg" width="200" height="42" /></a></td>
-    <td  align="center"   width=1000px></td>
-    <td valign="bottom"><strong>v0.1</strong></td>
+    <td   width=700px>&nbsp;</td>
+    <td valign="bottom"><strong>Especificaciones T&eacute;cnicas</strong></td>
     </tr>
-    </tbody>
-    </table> -->
-
-    <table style="height: 5px; width: 100%; margin-left: auto; margin-right: auto;" border="0" width="1200" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr >
-    <td   width=320px bgcolor ="#0000e6"><font color="white">&nbsp;&nbsp;Especificaciones Técnicas</td>
-    <td   width=680px bgcolor ="#0000e6"><font color="white"></td>
-    <td bgcolor = "#0000e6"><font color="white">&nbsp;</td>
-    </tr>
-
     </tbody>
     </table>
 
 
-<div><br><br></div>
+     <div>
+
+     </div>
+        <br>
+
 
 
 
@@ -333,26 +274,12 @@
 
 
 
-        <!--FOOTER-->
-<footer class="container">
-	<div class="row">
-		<div class="col-12">
-			<p class="text-center">&copy; 2018 - <a href="http://freseniusmedicalcare.pythonanywhere.com/" target="_blank">Fresenius Medical Care</a></p>
-		</div>
-	</div>
-</footer>
-	<!-- JavaScript opcional -->
-	<!-- Primero jQuery, luego Popper.js, luego Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-	<script>
-		$(function () {
-		  $('[data-toggle="popover"]').popover();
-		  $('[data-toggle="tooltip"]').tooltip();
-		})
-	</script>
-</body>
 
+
+
+
+
+
+    </body>
 
 </html>

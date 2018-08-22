@@ -1,51 +1,172 @@
 
 {% load widget_tweaks %}
 
-<html>
-
     <head>
-        <title>Fresenius - Edicion Articulo</title>
+        <title>Fresenius Lista Respuestos</title>
 
-        <style>
-            .special div {
-            border: 2px solid #f00;
-            margin: -2px;
-            }
-        </style>
+    <style>
 
-</head>
+    table {
+        border-spacing: 0;
+        width: 1200px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+        margin-left:auto;
+        margin-right:auto;
+        }
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    th {
+        cursor: pointer;
+        background-color: #80aaff
+    }
 
-<body>
+    th, td {
+        text-align: left;
+        padding: 3px;
+    }
 
-    <ul class="sidebar-nav">
-    {% if user.is_authenticated %}
-    <li>User: {{ user.get_username }}</li>
-    <li><a href="{% url 'logout'%}?next={{request.path}}">Salir</a></li>
-    {% else %}
-    <li><a href="{% url 'login'%}?next={{request.path}}">Ingresar</a></li>
-    {% endif %}
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    td.a {
+        font-size: 12px;
+    }
+
+    </style>
+
+
+    <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
+
+    </head>
+
+
+
+
+
+    <body>
+  <!--      <ul class="sidebar-nav">
+        {% if user.is_authenticated %}
+        <li>User: {{ user.get_username }}</li>
+        <li><a href="{% url 'logout'%}?next={{request.path}}">Salir</a></li>
+        {% else %}
+        <li><a href="{% url 'login'%}?next={{request.path}}">Ingresar</a></li>
+        {% endif %}
+        </ul>-->
+
+
+<nav class="navbar navbar-expand-lg navbar navbar-light" style="background-color: #e3f2fd;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <a class="navbar-brand" href="{% url 'index' %}"><img src="http://freseniusmedicalcare.pythonanywhere.com/media/frese_logo.png" width="200" height="42" /></a>
+
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+
+      </li>
+      <li class="nav-item">
+
+      </li>
+      <li class="nav-item">
+
+      </li>
     </ul>
 
 
 
-{% if articulo_instance.SYS_ESTADO ==  "enEdicion" %}
-     articulo_instance.SYS_dataEntryAuthor =  user
-{% else %}
+
+        <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+        <ul><a class="navbar-brand" href="{% url 'index' %}"><img src="http://freseniusmedicalcare.pythonanywhere.com/media/user_icon.png" width="20" /></a>{{ user.get_username }}&nbsp;<a href="{% url 'logout'%}?next={{request.path}}">Salir</a></ul>
+
+        {% else %}
+        <ul><a href="{% url 'login'%}?next={{request.path}}">Ingresar</a></ul>
+        {% endif %}
+        </ul>
+
+  </div>
+</nav>
+
+
+
+
+
+
+    <!-- Navigation Bar -->
+
+<!-- <div class="container">
+      <div id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                    <div class="loginmodal-container">
+                        <h1>Inicio de Sesion</h1><br>
+                      <form action="" method="post">
+                            <input type="text" name="username" placeholder="Usuario" autofocus required>
+                            <input type="password" name="password" placeholder="Clave" required>
+                            <input type="submit" name="login" class="login loginmodal-submit" value="Ingresar">
+                      </form>
+
+
+                    </div>
+                </div>
+              </div>
+    </div>-->
+
+
+
+   <!-- <table style="height: 50px; margin-left: auto; margin-right: auto; width: 1200px;" border="0" cellspacing="0" cellpadding="5">
+    <tbody>
+    <tr>
+    <td width=200px><a href="{% url 'index' %}"><img src="http://reflexpnt.pythonanywhere.com/media/GUI_pictures/logoFresenius.jpg" width="200" height="42" /></a></td>
+    <td  align="center"   width=1000px></td>
+    <td valign="bottom"><strong>v0.1</strong></td>
+    </tr>
+    </tbody>
+    </table> -->
+
+    <table style="height: 5px; width: 100%; margin-left: auto; margin-right: auto;" border="0" width="1200" cellspacing="0" cellpadding="0">
+    <tbody>
+    <tr >
+    <td   width=320px bgcolor ="#0000e6"><font color="white">&nbsp;&nbsp;</td>
+    <td   width=550px bgcolor ="#0000e6"><font color="white"></td>
+    <td bgcolor = "#0000e6"><font color="white"></td>
+    </tr>
+
+    </tbody>
+    </table>
+
+
+    {% if articulo_instance.SYS_ESTADO ==  "enEdicion" %}
+        kkk  articulo_instance.SYS_dataEntryAuthor =  user
+    {% else %}
         neno
-{% endif %}
+    {% endif %}
 
 
 
-
-    <table class="w3-table-all">
+    <table class="w3-table-all" style="border: 0px solid #000;">
     <thead>
-    <tr class="w3-pale-red">
-    <th>&nbsp;User: {{ user.get_username }} {{ articulo_instance.SYS_dataEntryAuthor.username }}</th>
-    <th class="w3-center"><h4 class="w3-opacity">Pag. de Edición</h4></th>
-    <th><strong>Estado:&nbsp;</strong>&nbsp;{{ articulo_instance.SYS_ESTADO }}<h4>&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]</h4></th>
+    <tr class="w3-pale-red" style="border: 0px solid #000;">
+    <th class="w3-left" style="border: 0px solid #000; "  >&nbsp;<h5 class="w3-opacity">&nbsp;&nbsp;&nbsp;&nbsp;Edición de Articulos</h5></th>
+    <th class="w3-center" style="border: 0px solid #00F;" width=680px>&nbsp;</th>
+
+    {% if articulo_instance.SYS_ESTADO == "Inicial" %}
+        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: powderblue">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]</font></p></th>
+    {% endif %}
+    {% if articulo_instance.SYS_ESTADO == "enEdicion" %}
+        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: rgba(255, 147, 71, 0.9);">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]</font></p></th>
+    {% endif %}
+    {% if articulo_instance.SYS_ESTADO == "Cerrado" %}
+        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: rgba(60, 179, 113, 0.9);">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]</font></p></th>
+    {% endif %}
+    {% if articulo_instance.SYS_ESTADO == "Aprobado" %}
+        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: rgba(106, 90, 205, 0.9);">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]</font></p></th>
+    {% endif %}
+
+
+
     </tr>
     </thead>
     </table>
@@ -54,7 +175,7 @@
 
 
 
-    <table style="height: 50px; margin-left: auto; margin-right: auto; width: 1200px;" border="0" cellspacing="0" cellpadding="5">
+  <!--  <table style="height: 50px; margin-left: auto; margin-right: auto; width: 1200px;" border="0" cellspacing="0" cellpadding="5">
     <tbody>
     <tr>
     <td width=200px><a href="{% url 'index' %}"><img src="http://reflexpnt.pythonanywhere.com/media/GUI_pictures/logoFresenius.jpg" width="200" height="42" /></a></td>
@@ -67,7 +188,7 @@
 
      <div></div><br>
 
-
+-->
 
     <form action="" method="POST" class="post-form">{% csrf_token %}
 
@@ -294,7 +415,27 @@
         </form>
 
 
+    <!--FOOTER-->
+<footer class="container">
+	<div class="row">
+		<div class="col-12">
+			<p class="text-center">&copy; 2018 - <a href="http://freseniusmedicalcare.pythonanywhere.com/" target="_blank">Fresenius Medical Care</a></p>
+		</div>
+	</div>
+</footer>
+	<!-- JavaScript opcional -->
+	<!-- Primero jQuery, luego Popper.js, luego Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<script>
+		$(function () {
+		  $('[data-toggle="popover"]').popover();
+		  $('[data-toggle="tooltip"]').tooltip();
+		})
+	</script>
 </body>
+
 
 
 

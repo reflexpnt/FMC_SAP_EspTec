@@ -14,7 +14,7 @@ from . import models
 
 
 class ArticuloAdmin(admin.ModelAdmin):
-  list_display = ('numeroParte', 'titulo', 'unidad', 'SYS_Prioridad','SYS_local', 'SYS_EsActivo', 'SYS_EsVisible')
+  list_display = ('numeroParte', 'titulo', 'unidad', 'SYS_Prioridad','SYS_local','SYS_ESTADO','SYS_locked', 'SYS_EsActivo', 'SYS_EsVisible')
   ordering = ('-SYS_Prioridad','-SYS_local','numeroParte',) # The negative sign indicate descendent order
   search_fields = ('numeroParte', 'titulo',  )
 

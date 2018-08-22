@@ -5,13 +5,13 @@
 
 
     <head>
-        <title>Fresenius Test</title>
+        <title>Fresenius Lista Respuestos</title>
 
     <style>
 
     table {
         border-spacing: 0;
-        width: 1000px;
+        width: 1200px;
         border: 1px solid #ddd;
         font-size: 14px;
         margin-left:auto;
@@ -80,7 +80,8 @@
 
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-      <button class="btn btn-outline-success my-1 my-sm-1" type="submit">Buscar</button>
+      <button  class="btn btn-outline-primary" type="submit">Buscar</button>
+
     </form>
 
 
@@ -135,9 +136,9 @@
     <table style="height: 5px; width: 100%; margin-left: auto; margin-right: auto;" border="0" width="1200" cellspacing="0" cellpadding="0">
     <tbody>
     <tr >
-    <td   width=320px bgcolor ="#0000e6"><font color="white">&nbsp;&nbsp;Fresenius Lista Repuestos</td>
-    <td   width=550px bgcolor ="#0000e6"><font color="white"></td>
-    <td bgcolor = "#0000e6"><font color="white">{{ articulosLOCAL_count }} articulos Locales de {{ articulos_count }} en DB</td>
+    <td   width=350px bgcolor ="#0000e6"><font color="white">&nbsp;&nbsp;Fresenius Lista Repuestos</td>
+    <td   width=1000px bgcolor ="#0000e6"><font color="white"></td>
+    <td   align="left" bgcolor = "#0000e6"><font color="white">{{ articulosLOCAL_count }} articulos Locales de {{ articulos_count }} en DB</td>
     </tr>
 
     </tbody>
@@ -154,6 +155,7 @@
            <th onclick="sortTable(1)"> SAP# </th>
            <th onclick="sortTable(2)"> Titulo </th>
            <th onclick="sortTable(3)"> Unidad </th>
+           <th onclick="sortTable(4)"> estado </th>
            <th> PDF </th>
            <th> edit </th>
 
@@ -177,6 +179,18 @@
             <td><h6><a href="{% url 'part_detail' pk=articulo.pk %}">{{ articulo.numeroParte }}</h6></a></td>
             <td><p>{{ articulo.titulo }}</p></td>
             <td><p>[ {{ articulo.unidad }} ]</p></td>
+            {% if articulo.SYS_ESTADO == "Inicial" %}
+                <td><p><span style="background-color: powderblue">&nbsp;&nbsp;{{ articulo.SYS_ESTADO }}&nbsp;&nbsp;</span></p></td>
+            {% endif %}
+            {% if articulo.SYS_ESTADO == "enEdicion" %}
+                <td><p><span style="background-color: rgba(255, 147, 71, 0.9);">&nbsp;{{ articulo.SYS_ESTADO }}&nbsp;</span></p></td>
+            {% endif %}
+            {% if articulo.SYS_ESTADO == "Cerrado" %}
+                <td><p><span style="background-color: rgba(60, 179, 113, 0.9);">&nbsp;&nbsp;{{ articulo.SYS_ESTADO }}&nbsp;&nbsp;</span></p></td>
+            {% endif %}
+            {% if articulo.SYS_ESTADO == "Aprobado" %}
+                <td><p><span style="background-color: rgba(106, 90, 205, 0.9);">&nbsp;&nbsp;{{ articulo.SYS_ESTADO }}&nbsp;</span></p></td>
+            {% endif %}
             <td><a target="_blank" href="{% url 'part_pdf' pdf_art_id=articulo.pk %}"><img border="0" alt="PDF" src=../media/datasheet.png width="20" ></a></td>
             <td><a target="_blank" href="{% url 'articulo_edit' pk=articulo.pk %}"><img border="0" alt="edit" src=../media/edit_icon2.png width="15" ></a></td>
 
@@ -257,12 +271,27 @@ function sortTable(n) {
 
 
 
-    </body>
+    <!--FOOTER-->
+<footer class="container">
+	<div class="row">
+		<div class="col-12">
+			<p class="text-center">&copy; 2018 - <a href="http://freseniusmedicalcare.pythonanywhere.com/" target="_blank">Fresenius Medical Care</a></p>
+		</div>
+	</div>
+</footer>
+	<!-- JavaScript opcional -->
+	<!-- Primero jQuery, luego Popper.js, luego Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<script>
+		$(function () {
+		  $('[data-toggle="popover"]').popover();
+		  $('[data-toggle="tooltip"]').tooltip();
+		})
+	</script>
+</body>
 
 
 
-<!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </html>
