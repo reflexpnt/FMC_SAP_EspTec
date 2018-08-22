@@ -262,6 +262,7 @@ def part_pdf(request, pdf_art_id):
     p.drawImage(logoImage, (MARGEN_IZQ+GAP_TEXTO_IZQ) * cm , (HEADER_BARRITA_Y * cm)+8,  width= 100 , height=20 ,  mask='auto')
 
 
+
     #SAP barra AZUL
     p.rect((MARGEN_IZQ) * cm, SAP_BAR_Y * cm,  SAP_BAR_WIDTH * cm, SAP_BAR_HEIGHT * cm, stroke=False, fill=True) # x,y, with,heigt
 
