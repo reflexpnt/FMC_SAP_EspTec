@@ -2,8 +2,6 @@
 <html>
 
 
-
-
     <head>
         <title>Fresenius Lista Respuestos</title>
 
@@ -241,8 +239,7 @@
     </tr>
     <tr>
     <td style="width: 12px;" bgcolor="#ffffff">&nbsp;</td>
-    <td style="width: 1182px;" bgcolor="#ffffff">{{ compo.Ensayos }}</td>
-    </tr>
+    <td style="width: 1182px;" bgcolor="#ffffff">{{ compo.Ensayos }}</td></tr>
     </tbody>
     </table>
 
@@ -256,10 +253,44 @@
     <td style="width: 12px;" bgcolor="#d9d9d9">&nbsp;</td>
     <td style="width: 1182px;" bgcolor="#d9d9d9"><strong>REFERENCIAS</strong></td>
     </tr>
-    <tr>
-    <td style="width: 12px;" bgcolor="#ffffff">&nbsp;</td>
-    <td style="width: 1182px;" bgcolor="#ffffff">{{ compo.Referencia2 }}</td>
-    </tr>
+
+
+
+    {% if compo.Referencia1 != "" %}
+        <tr>
+        <td style="width: 12px;" bgcolor="#ffffff">&nbsp;</td>
+        <td style="width: 1182px;" bgcolor="#ffffff">{{ compo.Referencia1 }}</td>
+        </tr>
+    {% endif %}
+
+    {% if compo.Referencia2 != "" %}
+        <tr>
+        <td style="width: 12px;" bgcolor="#ffffff">&nbsp;</td>
+        <td style="width: 1182px;" bgcolor="#ffffff">{{ compo.Referencia2 }}</td>
+        </tr>
+    {% endif %}
+
+    {% if compo.Referencia3 != "" %}
+        <tr>
+        <td style="width: 12px;" bgcolor="#ffffff">&nbsp;</td>
+        <td style="width: 1182px;" bgcolor="#ffffff">{{ compo.Referencia3 }}</td>
+        </tr>
+    {% endif %}
+
+    {% if compo.Referencia4 != "" %}
+        <tr>
+        <td style="width: 12px;" bgcolor="#ffffff">&nbsp;</td>
+        <td style="width: 1182px;" bgcolor="#ffffff">{{ compo.Referencia4 }}</td>
+        </tr>
+    {% endif %}
+
+    {% if compo.Referencia5 != "" %}
+        <tr>
+        <td style="width: 12px;" bgcolor="#ffffff">&nbsp;</td>
+        <td style="width: 1182px;" bgcolor="#ffffff">{{ compo.Referencia5 }}</td>
+        </tr>
+    {% endif %}
+
     </tbody>
     </table>
 
@@ -320,16 +351,7 @@
     </tbody>
     </table>
 
-    <div><br><br>
-     </div>
-    <div><br><br>
-     </div>
-    <div><br><br>
-     </div>
-    <div><br><br>
-     </div>
-    <div><br><br>
-     </div>
+
 
 
 
@@ -341,6 +363,22 @@
 		</div>
 	</div>
 </footer>
+
+
+
+    <div><br><br>
+     </div>
+    <div><br><br>
+     </div>
+    <div><br><br>
+     </div>
+    <div><br><br>
+     </div>
+    <div><br><br>
+     </div>
+
+
+
 	<!-- JavaScript opcional -->
 	<!-- Primero jQuery, luego Popper.js, luego Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -352,6 +390,7 @@
 		  $('[data-toggle="tooltip"]').tooltip();
 		})
 	</script>
+
 </body>
 
 

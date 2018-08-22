@@ -149,7 +149,7 @@
     <td   width=810px bgcolor ="#0000e6"><font color="white"><font size="6">&nbsp;{{ articulo_instance.titulo }}</td>
     <td bgcolor = "#0000e6"><div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">{% trans "Guardar" %}</button>
+            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
         </div>
     </div></td>
     </tr>
@@ -338,21 +338,6 @@
     </table>
 
 
-
-
-
-   <!--FOOTER-->
-<footer class="container">
-	<div class="row">
-		<div class="col-12">
-			<p class="text-center">&copy; 2018 - <a href="http://freseniusmedicalcare.pythonanywhere.com/" target="_blank">Fresenius Medical Care</a></p>
-		</div>
-	</div>
-</footer>
-
-
-
-
     <div><br><br>
      </div>
     <div><br><br>
@@ -370,11 +355,68 @@
     {{ form.SYS_ESTADO }}
 
 
+
+    <div class="form-group">
+    <div class="col-sm-4">
+    {{ form.linea |attr:"class:form-control " }}
+    </div>
+    </div>
+
+   {% for field in form %}
+
+            <div class="form-group">
+
+                <div class="col-sm-10">
+                    {{ field|attr:"class:form-control" }}
+
+                </div>
+            </div>
+
+    {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </form>
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <!--FOOTER-->
+<footer class="container">
+	<div class="row">
+		<div class="col-12">
+			<p class="text-center">&copy; 2018 - <a href="http://freseniusmedicalcare.pythonanywhere.com/" target="_blank">Fresenius Medical Care</a></p>
+		</div>
+	</div>
+</footer>
 	<!-- JavaScript opcional -->
 	<!-- Primero jQuery, luego Popper.js, luego Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -387,6 +429,7 @@
 		})
 	</script>
 </body>
+
 
 
 

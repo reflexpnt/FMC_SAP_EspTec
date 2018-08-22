@@ -232,7 +232,7 @@ def part_pdf(request, pdf_art_id):
         if OBJ.SYS_ESTADO == "Inicial":
             p.setFillColor(lightblue)
             p.setStrokeColor(lightblue)
-        if OBJ.SYS_ESTADO == "en Edición":
+        if OBJ.SYS_ESTADO == "enEdicion":
             p.setFillColor(orange)
             p.setStrokeColor(orange)
         if OBJ.SYS_ESTADO == "Cerrado":
