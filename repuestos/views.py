@@ -24,6 +24,16 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.db.models import F
 
+
+from django.shortcuts import render
+#from blog.models import Post
+from django.http import HttpResponse
+from django.core import serializers
+
+
+
+
+
 A4_WIDTH = 21
 A4_HEIGHT = 29.7
 
@@ -109,6 +119,26 @@ class Event(models.Model):
 def sorted_attendee_set(self):
     return self.attendee_set.order_by('last_name')
 """
+
+
+# Create your views here.
+@login_required
+def show(request):
+
+    articulosLOCAL_count = Articulo.objects.filter(SYS_local=1).count()
+    articulos = Articulo.objects.filter(SYS_local=1)
+    articulos_count = Articulo.objects.all().count()
+
+    return render(request, 'repuestos/datatables.html', {'articulos': articulos, 'articulos_count': articulos_count, 'articulosLOCAL_count': articulosLOCAL_count})
+
+
+@login_required
+def postsJson(request):
+    posts = Articulo.objects.all()
+    json = serializers.serialize('json', posts)
+    return HttpResponse(json, content_type='application/json')
+
+
 
 
 @login_required
