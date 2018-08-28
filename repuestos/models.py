@@ -26,6 +26,7 @@ PRIORITY_CHOICES = (
 
 STATUS_CHOICES = (
     ('Aprobado','Aprobado'),
+    ('enRevision','enRevisión'),
     ('Cerrado','Cerrado'),
     ('enEdicion', 'en Edición'),
     ('Inicial','Inicial'),

@@ -126,7 +126,11 @@ def sorted_attendee_set(self):
 def show(request):
 
     articulosLOCAL_count = Articulo.objects.filter(SYS_local=1).count()
+
+
     articulos = Articulo.objects.filter(SYS_local=1)
+    #articulos = Articulo.objects.all()
+
     articulos_count = Articulo.objects.all().count()
 
     return render(request, 'repuestos/datatables.html', {'articulos': articulos, 'articulos_count': articulos_count, 'articulosLOCAL_count': articulosLOCAL_count})
@@ -134,16 +138,33 @@ def show(request):
 
 @login_required
 def postsJson(request):
-    posts = Articulo.objects.all()
-    json = serializers.serialize('json', posts)
+
+    posts = Articulo.objects.filter(SYS_local=1)
+    #posts = Articulo.objects.all()
+
+
+    user  = request.user.username
+
+    """
+    def is_member(user):
+    return user.groups.filter(name='Member').exists()
+    """
+
+    #TAL VEZ REQUIERA QUE EL GRUPO TECNICO SOLO VEA LOS APROBADOS
+
+    if request.user.groups.filter(name='COMPRAS').exists():
+        posts = Articulo.objects.filter(SYS_ESTADO = 'Aprobado').filter(SYS_local=1)
+
+    json = serializers.serialize('json', posts )
     return HttpResponse(json, content_type='application/json')
 
 
 
-
+# Pag General ___________________________________________   LISTA
+#________________________________________________________
 @login_required
 def part_list(request):
-    ordering = ('-SYS_Prioridad',) # The negative sign indicate descendent order
+    #ordering = ('-SYS_Prioridad',) # The negative sign indicate descendent order
 
     #Articulo.objects.all().update(SYS_dataEntryAuthor=F('SYS_dataEntryAuthor'))
     #articulosLOCAL = Articulo.objects.count()
@@ -157,8 +178,8 @@ def part_list(request):
     return render(request, 'repuestos/part_list.html', {'articulos': articulos, 'articulos_count': articulos_count, 'articulosLOCAL_count': articulosLOCAL_count})
 
 
-
-
+# Pag General ___________________________________________   DETALLE   ( ver pk)
+#________________________________________________________
 @login_required
 def part_detail(request, pk):
     #Articulo.objects.filter(pk=979).update(SYS_Prioridad='5')   OJO CON ESTO , es para realizar update en masa
@@ -168,7 +189,15 @@ def part_detail(request, pk):
     return render(request, 'repuestos/part_detail.html', {'compo': compo})
 
 
+# Pag General ___________________________________________   DETALLE   ( ver ARAxxxx)
+#________________________________________________________
+@login_required
+def ara_detail(request, numeroParte):
+    compo = get_object_or_404(Articulo , numeroParte=numeroParte)
+    return render(request, 'repuestos/ara_detail.html', {'compo': compo})
 
+
+#url(r'^sapnum(?P<ara_number>[0-9]+)/$', views.ara_detail, name='ara_detail'),
 
 """
 def articulo_new(request):
@@ -186,25 +215,47 @@ def articulo_new(request):
     return render(request, 'repuestos/art_edit.html', {'form': form})
 """
 
-
+# Pag General ___________________________________________   EDICION
+#________________________________________________________
 @login_required
 def articulo_edit(request, pk ):
-        art_instance = get_object_or_404(Articulo, pk=pk)
-        if request.method == "POST":
-            form = ArticuloForm(request.POST, instance = art_instance)
-            if form.is_valid():
-                art_instance = form.save(commit=False)
-                art_instance.user = request.user
-                #art_instance.SYS_dataEntryAuthor = request.user
-                #art_instance.titulo =  request.titulo # add User.id as string
-                #art_instance.titulo = "TEST2" #validated_data.get('titulo', instance.titulo) # anda posta
-                #art_instance.titulo = art_instance.titulo
-                #art_instance.unidad = art_instance.unidad
-                art_instance.save()
-                return redirect('part_detail', pk=art_instance.pk)
-        else:
-            form = ArticuloForm(instance=art_instance)
-        return render(request, 'repuestos/art_edit.html', {'form': form, 'articulo_instance': art_instance})
+
+    art_instance = get_object_or_404(Articulo, pk=pk)
+
+    #enviar a aprobar
+    if request.method == "POST" and 'btnsaveandaprobe' in request.POST:
+        form = ArticuloForm(request.POST, instance = art_instance)
+        if form.is_valid():
+            art_instance = form.save(commit=False)
+            art_instance.user = request.user
+            art_instance.SYS_dataEntryAuthor = request.user
+            art_instance.SYS_ESTADO = "enRevision"
+            art_instance.SYS_locked = True
+            art_instance.save()
+            # ENVIAR A REVISION Y APROBAR  AQUI  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            #return redirect('part_detail', pk=art_instance.pk)
+            return redirect('ara_detail', numeroParte=art_instance.numeroParte)
+
+
+    #Grabar solamente
+    if request.method == "POST" and 'btnsave' in request.POST:
+        form = ArticuloForm(request.POST, instance = art_instance)
+        if form.is_valid():
+            art_instance = form.save(commit=False)
+            art_instance.user = request.user
+            art_instance.SYS_dataEntryAuthor = request.user
+            #if art_instance.SYS_ESTADO == "Cerrado":
+            #    art_instance.SYS_locked = True
+            art_instance.SYS_ESTADO = "enEdicion"
+            art_instance.SYS_locked = False
+            art_instance.save()
+
+
+
+    else:
+        form = ArticuloForm(instance=art_instance)
+    return render(request, 'repuestos/art_edit.html', {'form': form, 'articulo_instance': art_instance})
+
 
 
 

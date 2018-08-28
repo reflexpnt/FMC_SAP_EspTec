@@ -77,19 +77,24 @@
 }
     </style>
 
-
-
-<link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
-
         <script>
 
 
+function checkImage(imageSrc) {
+        var img = new Image();
+    try {
+        img.src = imageSrc;
+        //alert("good");
+        return imageSrc;
+
+    } catch(err) {
+        //alert("bad");
+        return 'http://freseniusmedicalcare.pythonanywhere.com/media/no_image.png';
+    }
 
 
 
-
-
-
+}
 
 
              jQuery(document).ready(function($jquery) {
@@ -118,7 +123,7 @@
 
                      "columns": [
                              //{ "data": "pk" ,"render": function (data) {return '<a href="'+ data +'">'+ data +'</a>';}},
-                             { "data": "fields.imagen_pri" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/media/'+ data +'"><img border="0"  src="http://freseniusmedicalcare.pythonanywhere.com/media/'+ data +'" width="50" ></a>';}},
+                             { "data": "fields.numeroParte" ,  "render":  function (data) {return '<a href="../media/pic_folder/'+ data +'.png"><img border="0" alt="imagen" src='+ checkImage('http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/'+ data +'.png')   +' width="50" ></a>'        ;}},
                              { "data": "fields.numeroParte" ,  "width": "10%" ,"render": function (data ) {return '<a href="/sapnum/'+ data +'"><strong>'+ data +'</strong></a>';}   },
                              // { "data": "pk" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/pdf/'+ data +'/"><img border="0" alt="PDF" src=../media/datasheet.png width="20" ></a>';}},
                              { "data": "fields.titulo" },
@@ -144,7 +149,7 @@
                                             }
 
                                 if ( (data == 'Aprobado')  || (data == 'Aprobado') )  {
-                                     return '<span style="color:#FFFFFF; background:#006600"><strong>&nbsp;&nbsp;'+ data +'&nbsp;&nbsp;</strong></span>' ;
+                                     return '<span style="color:#FFFFFF; background:#800080"><strong>&nbsp;&nbsp;'+ data +'&nbsp;&nbsp;</strong></span>' ;
                                             }
                                             else
                                             {
@@ -156,7 +161,7 @@
 
                             { "data": "fields.SYS_dataEntryAuthor" },
 
-                            //{ "data": "fields.imagen_pri" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/media/'+ data +'"><img border="0"  src="http://freseniusmedicalcare.pythonanywhere.com/media/'+ data +'" width="50" ></a>';}},
+
 
                             { "data": "pk" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/pdf/'+ data +'/"><img border="0" alt="PDF" src=../media/datasheet.png width="20" ></a>';}},
                             //{ "data": "pk" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/art/'+ data +'/edit"><img border="0" alt="edit" src=../media/edit_icon2.png width="15" ></a>';}}
@@ -264,30 +269,7 @@
 	</div>
 </footer>
 
-    <div><br><br>
-     </div>
-    <div><br><br>
-     </div>
-    <div><br><br>
-     </div>
-    <div><br><br>
-     </div>
-    <div><br><br>
-     </div>
 
-
-
-<!-- JavaScript opcional -->
-	<!-- Primero jQuery, luego Popper.js, luego Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-	<script>
-		$(function () {
-		  $('[data-toggle="popover"]').popover();
-		  $('[data-toggle="tooltip"]').tooltip();
-		})
-	</script>
 
 
     </body>

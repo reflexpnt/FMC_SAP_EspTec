@@ -122,21 +122,19 @@
     <td   width=320px bgcolor ="#0000e6"><font color="white"><font size="6"><strong>{{ compo.numeroParte }}</strong></td>
     <td   width=810px bgcolor ="#0000e6"><font color="white"><font size="6">{{ compo.titulo }}</td>
 
+
+
+
     {% if compo.SYS_locked != True %}
-        <td align="center" valign="center" bgcolor = "#0000e6"> <div valign="bottom"><a href="{% url 'articulo_edit' pk=compo.pk %}"><img valign="bottom" border="0" alt="edit" src=http://freseniusmedicalcare.pythonanywhere.com/media/edit_icon2_white.png width="28" ></a></div>&nbsp;</td>
+        <td align="center" valign="center" bgcolor = "#0000e6"> <div valign="bottom"><a href="{% url 'articulo_edit' pk=compo.pk %}"><img valign="bottom" border="0" alt="edit" src=../../media/edit_icon2_white.png width="28" ></a></div>&nbsp;</td>
 
         {% else %}
-        <td align="center" valign="center" bgcolor = "#0000e6"> <div valign="bottom"><a href=""><img valign="bottom" border="0" alt="edit" src=http://freseniusmedicalcare.pythonanywhere.com/media/no_edit_icon2_white.png width="28" ></a></div>&nbsp;</td>
+        <td align="center" valign="center" bgcolor = "#0000e6"> <div valign="bottom"><a href=""><img valign="bottom" border="0" alt="edit" src=../../media/no_edit_icon2_white.png width="28" ></a></div>&nbsp;</td>
         {% endif %}
-
-
-
-
     </tr>
 
     </tbody>
     </table>
-
 
 
 
@@ -360,8 +358,6 @@
     </tr>
     </tbody>
     </table>
-
-
 
 
 
