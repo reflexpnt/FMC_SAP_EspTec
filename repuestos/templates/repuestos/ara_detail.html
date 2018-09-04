@@ -1,3 +1,5 @@
+{% load i18n widget_tweaks %}
+
 <!doctype html>
 <html>
 
@@ -216,13 +218,15 @@
     </table>
 
 
-    <table style="height: 300px; width: 1200px; margin-left: auto; margin-right: auto;" border="0" cellspacing="0" cellpadding="15">
+    <table style="height: 300px; width: 1200px; margin-left: auto; margin-right: auto; white-space: pre;" border="0" cellspacing="0" cellpadding="15">
     <tbody>
     <tr >
     <td width=5px >&nbsp;</td>
-    <td class="special" width=300px valign="center"><img src=http://freseniusmedicalcare.pythonanywhere.com/media/{{ compo.imagen_pri }} width="300"  /></td>
+    <td class="special" width=300px valign="center"><img src=http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/{{ compo.imagen_Pri_Nombre }} width="300"  /></td>
     <td width=5px >&nbsp;</td>
-    <td   valign="top" align="left">{{ compo.Descripcion }}</td>
+
+    <td><div>{{ compo.Descripcion }}</div></td>
+
     </tr>
     <tr >
     <td >&nbsp;</td>
@@ -239,7 +243,7 @@
      </div>
 
 
-    <table style="height: 26px; width: 1200px; margin-left: auto; margin-right: auto;" border="0" cellspacing="0" cellpadding="4">
+    <table style="height: 26px; width: 1200px; margin-left: auto; margin-right: auto;  white-space: pre; border="0" cellspacing="0" cellpadding="4">
     <tbody>
     <tr>
     <td style="width: 12px;" bgcolor="#d9d9d9">&nbsp;</td>

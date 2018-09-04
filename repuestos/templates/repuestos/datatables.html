@@ -118,7 +118,7 @@
 
                      "columns": [
                              //{ "data": "pk" ,"render": function (data) {return '<a href="'+ data +'">'+ data +'</a>';}},
-                             { "data": "fields.imagen_pri" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/media/'+ data +'"><img border="0"  src="http://freseniusmedicalcare.pythonanywhere.com/media/'+ data +'" width="50" ></a>';}},
+                             { "data": "fields.numeroParte" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/'+ data +'.png"><img border="0"  src="http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/'+ data +'.png" width="50" ></a>';}},
                              { "data": "fields.numeroParte" ,  "width": "10%" ,"render": function (data ) {return '<a href="/sapnum/'+ data +'"><strong>'+ data +'</strong></a>';}   },
                              // { "data": "pk" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/pdf/'+ data +'/"><img border="0" alt="PDF" src=../media/datasheet.png width="20" ></a>';}},
                              { "data": "fields.titulo" },
@@ -135,12 +135,13 @@
                                      return '<span style="background-color: rgba(255, 147, 71, 0.9);"><strong>&nbsp;&nbsp;'+ data +'&nbsp;&nbsp;</strong></span>' ;
                                             }
 
-                                if ( (data == 'Cerrado')  || (data == 'Cerrado') )  {
-                                     return '<span style="background-color: rgba(60, 179, 113, 0.9);"><strong>&nbsp;&nbsp;'+ data +'&nbsp;&nbsp;</strong></span>' ;
-                                            }
 
                                 if ( (data == 'enRevision')  || (data == 'enRevision') )  {
                                      return '<span style="color:#FFFFFF; background:#FF69B4"><strong>&nbsp;&nbsp;'+ data +'&nbsp;&nbsp;</strong></span>' ;
+                                            }
+
+                                if ( (data == 'Revisado')  || (data == 'Revisado') )  {
+                                     return '<span style="color:#FFFFFF; background:#9a54d3"><strong>&nbsp;&nbsp;'+ data +'&nbsp;&nbsp;</strong></span>' ;
                                             }
 
                                 if ( (data == 'Aprobado')  || (data == 'Aprobado') )  {

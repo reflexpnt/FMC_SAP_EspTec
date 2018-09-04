@@ -26,8 +26,8 @@ PRIORITY_CHOICES = (
 
 STATUS_CHOICES = (
     ('Aprobado','Aprobado'),
+    ('Revisado','Revisado'),
     ('enRevision','enRevisión'),
-    ('Cerrado','Cerrado'),
     ('enEdicion', 'en Edición'),
     ('Inicial','Inicial'),
    )
@@ -48,7 +48,14 @@ class Articulo(models.Model):
         SYS_EsActivo = models.BooleanField(  default=True)
         SYS_EsVisible = models.BooleanField(   default=True)
         SYS_ESTADO = models.CharField(max_length=10, choices = STATUS_CHOICES, default='Inicial')
-        SYS_dataEntryAuthor = models.ForeignKey( User, related_name='data_entries',  blank=True, null=True)
+        SYS_dataEntryAuthor     = models.ForeignKey( User, related_name='data_entries',  blank=True, null=True)
+        SYS_RevisedByAuthor     = models.ForeignKey( User, related_name='revisers',  blank=True, null=True)
+        SYS_ApprovedByAuthor    = models.ForeignKey( User, related_name='approvers',  blank=True, null=True)
+
+        SYS_Approver_Notes = models.CharField(max_length=250, blank=True, default="")
+        SYS_Reviser_Notes = models.CharField(max_length=250, blank=True, default="")
+
+
         SYS_locked = models.BooleanField(blank=True,  default=False)
 
         ordering = ['SYS_Prioridad']

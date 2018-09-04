@@ -16,6 +16,7 @@ urlpatterns = [
     #url(r'^$', include('django.contrib.auth.urls')),
     #url(r'^$', views.part_pdf),
     url(r'^pdf/(?P<pdf_art_id>[0-9]+)/$', views.part_pdf, name='part_pdf'),
+
     url(r'^(?P<pk>[0-9]+)/$', views.part_detail, name='part_detail'),
 
     url(r'^sapnum/(?P<numeroParte>[a-zA-Z0-9_]+)/$', views.ara_detail, name='ara_detail'),
@@ -27,6 +28,10 @@ urlpatterns = [
 
     url(r'^datatables', views.show, name='datatables'),
 
+
+
+
+    url(r'^test/$', views.test_pdf, name='test_pdf'),
 
 ]
 

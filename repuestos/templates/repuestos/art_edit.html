@@ -165,10 +165,12 @@
 
     <div><br></div>
 
-    <table style="height: 5px; margin-left: auto; margin-right: auto;" border="0" width="1200" cellspacing="0" cellpadding="0">
+    <table style="height: 5px; margin-left: auto; margin-right: auto;" border="1" width="1200" cellspacing="0" cellpadding="0">
     <tbody>
     <tr>
-    <td style="width: 597px;" bgcolor="#d9d9d9"><strong>INFORMACI&Oacute;N PARA COMPRAS</strong></td>
+    <td style="width: 500px;" bgcolor="#d9d9d9"><strong>INFORMACI&Oacute;N PARA COMPRAS</strong></td>
+
+    <td style="width: 100px;" bgcolor="#d9d9d9" class="col-sm-4">Prioridad:{{ form.SYS_Prioridad |attr:"class:form-control " }}</td>
     </tr>
     </tbody>
     </table>
@@ -221,13 +223,13 @@
     <tbody>
     <tr >
     <td width=5px >&nbsp;</td>
-    <td class="special" width=300px valign="center"><img  width="300" src="http://freseniusmedicalcare.pythonanywhere.com/media/{{ articulo_instance.imagen_pri }}"</td>
+    <td class="special" width=250px valign="center"><img src=http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/{{ articulo_instance.imagen_Pri_Nombre }} width="250"  /></td>
     <td width=5px >&nbsp;</td>
     <td valign="center" align="left"><div class="form-group"><div class="col-sm-12">{{ form.Descripcion | attr:"class:form-control " }}</div></div></td>
     </tr>
     <tr >
     <td >&nbsp;</td>
-    <td align="center" >{{ articulo_instance.imagen_pri }}</td>
+    <td align="center" >{{ articulo_instance.imagen_Pri_Nombre }}</td>
     <td >&nbsp;</td>
     <td >&nbsp;</td>
     </tr>
@@ -371,7 +373,7 @@
      </div>
 
 
-    {{ form.SYS_Prioridad }}
+
 
     {{ form.SYS_ESTADO }}
 

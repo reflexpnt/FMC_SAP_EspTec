@@ -7,12 +7,12 @@ from .models import Articulo
 
 from io import BytesIO
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4, landscape
+from reportlab.lib.pagesizes import A3, A4, landscape
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph, Table, TableStyle, Image
 from reportlab.lib.enums import TA_LEFT, TA_CENTER
 from reportlab.lib import colors
-from reportlab.lib.units import inch, cm
+from reportlab.lib.units import inch, cm, mm
 from django.http import HttpResponse, HttpResponseNotFound
 from reportlab.lib.colors import black, white, pink, lightblue, blue, lightgrey, green, lightgreen, orange, yellow
 from reportlab.platypus import SimpleDocTemplate
@@ -30,9 +30,29 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core import serializers
 
+#import requests
+
+from reportlab.lib.styles import ParagraphStyle
+
+from reportlab.platypus import   Spacer, PageBreak
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+
+from django.core.mail import send_mail
+import smtplib
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 
+#import sendgrid
+#from sendgrid.helpers.mail import *
+
+from reportlab.graphics.shapes import Drawing
+from reportlab.graphics.barcode.qr import QrCodeWidget
+from reportlab.graphics import renderPDF
 
 A4_WIDTH = 21
 A4_HEIGHT = 29.7
@@ -232,8 +252,132 @@ def articulo_edit(request, pk ):
             art_instance.SYS_ESTADO = "enRevision"
             art_instance.SYS_locked = True
             art_instance.save()
+
+
+            """
+            mensaje_cuerpo = " Ud Tiene Pendientes para Revisión:\r\n"
+            mensaje_cuerpo += art_instance.numeroParte
+            #mensaje_cuerpo +=  {{art_instance.numeroParte}} #+ "&nbsp;&nbsp;[" + {{art_instance.SYS_dataEntryAuthor}} +"]"
+            """
+
+
+            # Create message container - the correct MIME type is multipart/alternative.
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = "Link"
+            msg['From'] = "fernando.perez-ar@fmc-ag.com"
+            msg['To'] = "fernando.perez-ar@fmc-ag.com"
+
+            # Create the body of the message (a plain-text and an HTML version).
+            text = "Hi!\nHow are you?\nHere is the link you wanted:\nhttp://www.python.org"
+
+            html =" Ud Tiene Pendientes para Revisión:\r\n"
+            html +=  "\r\n"
+            #html +=  "    " + art_instance.numeroParte + "   de [ "+art_instance.SYS_dataEntryAuthor+" ]"
+            html +=  "    " + art_instance.numeroParte +  "   de [ "+ art_instance.SYS_dataEntryAuthor.username   +" ]" + "\r\n"
+            html +=  "           http://freseniusmedicalcare.pythonanywhere.com/sapnum/" + art_instance.numeroParte
+
+            # Record the MIME types of both parts - text/plain and text/html.
+            part1 = MIMEText(text, 'plain')
+            part2 = MIMEText(html, 'html')
+
+            # Attach parts into message container.
+            # According to RFC 2046, the last part of a multipart message, in this case
+            # the HTML message, is best and preferred.
+            msg.attach(part1)
+            msg.attach(part2)
+
+
+            #send_mail('Pendientes para Revisión', mensaje_cuerpo,'fernando.perez-ar@fmc-ag.com',  ['fernando.perez-ar@fmc-ag.com'],  fail_silently=False,    )
+            #send_mail('Pendientes para Revisión', html,'fernando.perez-ar@fmc-ag.com',  ['fernando.perez-ar@fmc-ag.com'],  fail_silently=False,    )
+            send_mail('Especificaciones Técnicas - Pendientes para Revisión', html,'fernando.perez-ar@fmc-ag.com',  ['fernando.perez-ar@fmc-ag.com', 'mariano.gallego@fmc-ag.com'],  fail_silently=False,    )
+
+
+            mySENDGRID_API_KEY='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'
+
+
+
+            """
+            pip3 install sendgrid
+            import sendgrid
+            import os
+            from sendgrid.helpers.mail import *
+            """
+
+            """
+            sg = sendgrid.SendGridAPIClient(mySENDGRID_API_KEY)
+            from_email = Email("fernando.perez-ar@fmc-ag.com")
+            to_email = Email("fernando.perez-ar@fmc-ag.com")
+            subject = "Sending with SendGrid is Fun"
+            content = Content("text/plain", "and easy to do anywhere, even with Python")
+            mail = Mail(from_email, subject, to_email, content)
+            response = sg.client.mail.send.post(request_body=mail.get())
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
+            """
+
+            """
+            sg = sendgrid.SendGridAPIClient(mySENDGRID_API_KEY)
+            data = {
+              "personalizations": [
+                {
+                  "to": [
+                    {
+                      "email": "fernando.perez-ar@fmc-ag.com"
+                    }
+                  ],
+                  "subject": "Sending with SendGrid is Fun"
+                }
+              ],
+              "from": {
+                "email": "fernando.perez-ar@fmc-ag.com"
+              },
+              "content": [
+                {
+                  "type": "text/plain",
+                  "value": "and easy to do anywhere, even with Python"
+                }
+              ]
+            }
+            response = sg.client.mail.send.post(request_body=data)
+            """
+
+
+            """
+            import requests
+
+            headers = {'X-API-TOKEN': 'your_token_here'}
+
+            payload = {'title': 'value1', 'name': 'value2'}
+
+            r = requests.post("https://api.sendgrid.com/v3/mail/send", data=payload, headers=headers)
+            """
+
+            #headers = { 'Authorization': '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', 'Content-Type' : 'application/json',    }
+
+
+            #payload = {'personalizations': '[{"to": [{"email": "fernando.perez-ar@fmc-ag.com"}]}],"from": {"email": "kk@fmc-ag.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}],}
+
+            #r = requests.post("https://api.sendgrid.com/v3/mail/send", data=payload, headers=headers)
             # ENVIAR A REVISION Y APROBAR  AQUI  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             #return redirect('part_detail', pk=art_instance.pk)
+
+            """
+            import requests
+
+            headers = {
+            'Authorization': 'Bearer $SENDGRID_API_KEY',
+            'Content-Type': 'application/json',
+            }
+
+            data = '{"personalizations": [{"to": [{"email": "fernando.perez-ar@fmc-ag.com"}]}],"from": {"email": "fernando.perez-ar@fmc-ag.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with URL"}]}'
+
+            response = requests.post('http://%3E', headers=headers, data=data)
+
+            """
+
+
+
             return redirect('ara_detail', numeroParte=art_instance.numeroParte)
 
 
@@ -251,7 +395,15 @@ def articulo_edit(request, pk ):
             art_instance.save()
 
 
-
+            """
+            send_mail(
+            'Subject here',
+            'Here is the message.',
+            'from@example.com',
+            ['to@example.com'],
+            fail_silently=False,
+            )
+            """
     else:
         form = ArticuloForm(instance=art_instance)
     return render(request, 'repuestos/art_edit.html', {'form': form, 'articulo_instance': art_instance})
@@ -274,11 +426,22 @@ def part_pdf(request, pdf_art_id):
     Usuario_editor = None
     Usuario_editor_nombre = None
     Usuario_editor_email = None
+
+    """
     if request.user.is_authenticated():
         Usuario_editor = str( request.user.username )
         Usuario_editor_nombre =  str( request.user.first_name ) + " " + str( request.user.last_name )
         Usuario_editor_email =  str( request.user.email )
+    """
 
+    Usuario_editor = str( OBJ.SYS_dataEntryAuthor.username )
+    Usuario_editor_nombre =  str( OBJ.SYS_dataEntryAuthor.first_name ) + " " + str( OBJ.SYS_dataEntryAuthor.last_name )
+    Usuario_editor_email =  str( OBJ.SYS_dataEntryAuthor.email )
+
+    """
+    SYS_RevisedByAuthor  = models.ForeignKey( User, related_name='revisers',  blank=True, null=True)
+    SYS_ApprovedByAuthor = models.ForeignKey( User, related_name='approvers',  blank=True, null=True)
+    """
 
     #Usuario_editor = request.user
 
@@ -325,6 +488,16 @@ def part_pdf(request, pdf_art_id):
         p.setStrokeColor(white)
         p.setFillColor(white)
         p.drawString((17 + GAP_TEXTO_IZQ + GAP_TEXTO_IZQ )* cm, (27.8 + GAP_TEXTO_BOTTOM)* cm, OBJ.SYS_ESTADO)
+
+    """
+    if OBJ.SYS_ESTADO == "Aprobado":
+    si esta aprobado se llenaria los usuarios correspondientes aqui
+
+
+
+    """
+
+
 
 
     p.setFont("Helvetica", 10)
@@ -432,14 +605,57 @@ def part_pdf(request, pdf_art_id):
     p.rect( DESC_IMAGE_X * cm, DESC_IMAGE_Y * cm,  DESC_IMAGE_WIDTH * cm, DESC_IMAGE_HEIGTH * cm, stroke=True, fill=False) # tabla imagen
 
     # IMAGEN DATA - http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/
-    artImagen = ImageReader('http://reflexpnt.pythonanywhere.com/media/GUI_pictures/' + OBJ.imagen_Pri_Nombre)
+    # ANDA  artImagen = ImageReader('http://reflexpnt.pythonanywhere.com/media/GUI_pictures/' + OBJ.imagen_Pri_Nombre)
     # NO FUNCIONA - NI IDEA PORQ artImagen =  ImageReader('http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/' + OBJ.imagen_Pri_Nombre)
+    # artImagen = ImageReader('http://reflexpnt.pythonanywhere.com/media/pic_folder2/' + OBJ.numeroParte + '.png')
 
     p.setFont("Helvetica", 6)
     p.setStrokeColor(black)
     p.setFillColor(black)
+    imagenTest = "http://reflexpnt.pythonanywhere.com/media/pic_folder2/" + OBJ.numeroParte + ".png"
+    #imagenTest = "http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/" + OBJ.numeroParte + ".png"
+
+    """
+    if os.path.exists(imagenTest) and os.path.getsize(imagenTest) > 0:
+        imagenTest = "http://reflexpnt.pythonanywhere.com/media/pic_folder2/no_image.png"
+        p.drawString(( MARGEN_IZQ + MARGEN_IZQ + 0.5) * cm, ( DESC_IMAGE_Y - TEXTO_ROW_HEIGTH - GAP_TEXTO_BOTTOM + GAP_TEXTO_BOTTOM) * cm,  "[ " + OBJ.numeroParte +".png------------------------" + " ]")
+    """
+
+    artImagen = ImageReader(imagenTest)
     p.drawImage(artImagen , (DESC_IMAGE_X * cm)+2, (DESC_IMAGE_Y * cm)+2, width= (( DESC_IMAGE_WIDTH * cm)-4 )  ,  preserveAspectRatio=True, height= (( DESC_IMAGE_HEIGTH * cm)-4 ), mask='auto')
-    p.drawString(( MARGEN_IZQ + MARGEN_IZQ + 0.5) * cm, ( DESC_IMAGE_Y - TEXTO_ROW_HEIGTH - GAP_TEXTO_BOTTOM + GAP_TEXTO_BOTTOM) * cm,  "[" + OBJ.imagen_Pri_Nombre + "]")
+    p.drawString(( MARGEN_IZQ + MARGEN_IZQ + 0.5) * cm, ( DESC_IMAGE_Y - TEXTO_ROW_HEIGTH - GAP_TEXTO_BOTTOM + GAP_TEXTO_BOTTOM) * cm,  "[ " + OBJ.numeroParte +".png" + " ]-no vacio")
+
+    """
+    try:
+        if os.path.getsize(imagenTest) > 0:
+            # Non empty file exists
+            # ... your code ...
+            imagenTest = "http://reflexpnt.pythonanywhere.com/media/pic_folder2/" + OBJ.numeroParte + ".png"
+            artImagen = ImageReader(imagenTest)
+            p.drawImage(artImagen , (DESC_IMAGE_X * cm)+2, (DESC_IMAGE_Y * cm)+2, width= (( DESC_IMAGE_WIDTH * cm)-4 )  ,  preserveAspectRatio=True, height= (( DESC_IMAGE_HEIGTH * cm)-4 ), mask='auto')
+            p.drawString(( MARGEN_IZQ + MARGEN_IZQ + 0.5) * cm, ( DESC_IMAGE_Y - TEXTO_ROW_HEIGTH - GAP_TEXTO_BOTTOM + GAP_TEXTO_BOTTOM) * cm,  "[ " + OBJ.numeroParte +".png" + " ]-no vacio")
+        else:
+            # Empty file exists
+            # ... your code ...
+            imagenTest = "http://reflexpnt.pythonanywhere.com/media/pic_folder2/no_image.png"
+            artImagen = ImageReader(imagenTest)
+            p.drawImage(artImagen , (DESC_IMAGE_X * cm)+2, (DESC_IMAGE_Y * cm)+2, width= (( DESC_IMAGE_WIDTH * cm)-4 )  ,  preserveAspectRatio=True, height= (( DESC_IMAGE_HEIGTH * cm)-4 ), mask='auto')
+            p.drawString(( MARGEN_IZQ + MARGEN_IZQ + 0.5) * cm, ( DESC_IMAGE_Y - TEXTO_ROW_HEIGTH - GAP_TEXTO_BOTTOM + GAP_TEXTO_BOTTOM) * cm,  "[ " + OBJ.numeroParte +".png" + " ]-vacio")
+    except OSError as e:
+        # File does not exists or is non accessible
+        # ... your code ...
+        imagenTest = "http://reflexpnt.pythonanywhere.com/media/pic_folder2/no_image.png"
+        artImagen = ImageReader(imagenTest)
+        p.drawImage(artImagen , (DESC_IMAGE_X * cm)+2, (DESC_IMAGE_Y * cm)+2, width= (( DESC_IMAGE_WIDTH * cm)-4 )  ,  preserveAspectRatio=True, height= (( DESC_IMAGE_HEIGTH * cm)-4 ), mask='auto')
+        p.drawString(( MARGEN_IZQ + MARGEN_IZQ + 0.5) * cm, ( DESC_IMAGE_Y - TEXTO_ROW_HEIGTH - GAP_TEXTO_BOTTOM + GAP_TEXTO_BOTTOM) * cm,  "[ " + OBJ.numeroParte +".png" + " ]-exception")
+    """
+
+
+    p.setFont("Helvetica", 6)
+    p.setStrokeColor(black)
+    p.setFillColor(black)
+    #p.drawImage(artImagen , (DESC_IMAGE_X * cm)+2, (DESC_IMAGE_Y * cm)+2, width= (( DESC_IMAGE_WIDTH * cm)-4 )  ,  preserveAspectRatio=True, height= (( DESC_IMAGE_HEIGTH * cm)-4 ), mask='auto')
+    #p.drawString(( MARGEN_IZQ + MARGEN_IZQ + 0.5) * cm, ( DESC_IMAGE_Y - TEXTO_ROW_HEIGTH - GAP_TEXTO_BOTTOM + GAP_TEXTO_BOTTOM) * cm,  "[ " + OBJ.numeroParte +".png" + " ]")
 
 
 
@@ -551,9 +767,14 @@ def part_pdf(request, pdf_art_id):
 
     width, height = A4
     styles = getSampleStyleSheet()
+
+
+
     styleN = styles["BodyText"]
+
+    #styleN.alignment = TA_LEFT
     styleN.alignment = TA_LEFT
-    #styleN.alignment = RIGHT
+
     styleBH = styles["Normal"]
     styleBH.alignment = TA_CENTER
 
@@ -610,7 +831,40 @@ def part_pdf(request, pdf_art_id):
         controEnsayos_table.drawOn( p, (CONTROLES_TEXT_X * cm), ((CONTROLES_BAR_Y - CONTROLES_BAR_HEIGTH - CONTROLES_BAR_HEIGTH- CONTROLES_BAR_HEIGTH ) *cm) )
 
 
+    p.setStrokeColor(black)
+    p.setFillColor(white)
+    p.rect( 520, (25.18) * cm,  46, 46, stroke=True, fill=True) # x,y, with,heigt
 
+    string_QR = OBJ.numeroParte + OBJ.titulo + '\r\n' + "http://freseniusmedicalcare.pythonanywhere.com/sapnum/" + OBJ.numeroParte
+
+    qrw = QrCodeWidget( string_QR )
+    b = qrw.getBounds()
+
+    w=b[2]-b[0]
+    h=b[3]-b[1]
+
+    d = Drawing(50,50,transform=[50./w,0,0,50./h,0,0])
+    d.add(qrw)
+
+    renderPDF.draw(d, p, 518  , (25.12) * cm)
+    """
+
+    #SAP barra AZUL
+    p.rect((MARGEN_IZQ) * cm, SAP_BAR_Y * cm,  SAP_BAR_WIDTH * cm, SAP_BAR_HEIGHT * cm, stroke=False, fill=True) # x,y, with,heigt
+
+    # SAP- ARAxxxxxx
+    p.setFont("Helvetica-Bold", 18)
+    p.setStrokeColor(white)
+    p.setFillColor(white)
+    p.drawString((MARGEN_IZQ+GAP_TEXTO_IZQ) * cm, 26.20 * cm, OBJ.numeroParte)
+
+    # SAP- Titulo
+    p.setStrokeColor(white)
+    p.setFillColor(white)
+    p.setFont("Helvetica-Bold", 14)
+    p.drawString(7.0 * cm, 26.25 * cm, OBJ.titulo)
+
+    """
 
     p.showPage()
     p.setTitle(nombreArchivo)
@@ -618,4 +872,62 @@ def part_pdf(request, pdf_art_id):
     return response
 
 
+#______________________________________________________________________________________________________________________________________
+#______________________________________________________________________________________________________________________________________
 
+
+def test_pdf(request):
+
+    CARD_WIDTH = 50
+    CARD_HEIGTH = 80
+    CARD_EXT_RADIUS = 4
+    CARD_EXT_MARGEN = 3
+
+    CARD_X = 50
+    CARD_Y = 50
+
+
+
+
+
+    #Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="{}"'.format("cardTest.pdf")
+
+    #Create the PDF object, using the response object as its "file."
+    pdf = canvas.Canvas(response)
+
+    #barrita azul footer
+    pdf.setFillColor(blue)
+    pdf.setStrokeColor(blue)
+    pdf.rect((MARGEN_IZQ) * cm, 1.5 * cm,  18.6 * cm, 0.1 * cm, stroke=False, fill=True) # x,y, with,heigt
+    #canvas.roundRect(15, 625, 250, 125, 4, stroke=1, fill=0)
+    #pdf.roundRect(self, x, y, width, height, radius, stroke=1, fill=0)
+    pdf.setFillColor(black)
+    pdf.setStrokeColor(black)
+    #pdf.strokeWidth = (15)
+    pdf.roundRect((CARD_X * mm), (CARD_Y * mm), (CARD_WIDTH * mm), (CARD_HEIGTH * mm), (CARD_EXT_RADIUS * mm), stroke=1, fill=1)
+
+    pdf.setFillColor(white)
+    pdf.setStrokeColor(white)
+    pdf.roundRect( ((CARD_X + CARD_EXT_MARGEN) * mm), ((CARD_Y + CARD_EXT_MARGEN) * mm), ((CARD_WIDTH - CARD_EXT_MARGEN - CARD_EXT_MARGEN) * mm),  ((CARD_HEIGTH - CARD_EXT_MARGEN - CARD_EXT_MARGEN) * mm), ((CARD_EXT_RADIUS-2) * mm), stroke=1, fill=1)
+
+
+    # imagen 1
+    imagenUNO = ImageReader('http://reflexpnt.pythonanywhere.com/media/GUI_pictures/user_icon.png')
+    pdf.drawImage(imagenUNO, (6) * cm , (5)*cm,  width= 100  ,  mask='auto',  preserveAspectRatio=True)
+
+    imagenDOS = ImageReader('http://reflexpnt.pythonanywhere.com/media/GUI_pictures/png2.png')
+    pdf.drawImage(imagenDOS, (5.5) * cm , (1.0)*cm,  width= 100  ,  mask='auto',  preserveAspectRatio=True)
+
+
+    """
+    width, height = A4
+    styles = getSampleStyleSheet()
+    """
+
+
+    pdf.showPage()
+    pdf.setTitle("test_pdf")
+    pdf.save()
+    return response
