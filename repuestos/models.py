@@ -53,7 +53,7 @@ class Articulo(models.Model):
         SYS_ApprovedByAuthor    = models.ForeignKey( User, related_name='approvers',  blank=True, null=True)
 
         SYS_Approver_Notes = models.CharField(max_length=250, blank=True, default="")
-        SYS_Reviser_Notes = models.CharField(max_length=250, blank=True, default="")
+        SYS_Reviser_Notes  = models.CharField(max_length=250, blank=True, default="")
 
 
         SYS_locked = models.BooleanField(blank=True,  default=False)

@@ -225,63 +225,6 @@ def ara_detail(request, numeroParte):
 
 
 
-
-
-#  ara_revision
-#  ____________________________________________________________________________________
-#      btnRechazar  btnsave   btnsaveandaprobe
-@login_required
-def ara_revision(request, numeroParte ):
-
-    art_instance = get_object_or_404(Articulo , numeroParte=numeroParte)
-
-    #enviar a aprobar
-    if request.method == "POST" and 'btnsaveandaprobe' in request.POST:
-        form = ArticuloForm(request.POST, instance = art_instance)
-        if form.is_valid():
-            art_instance = form.save(commit=False)
-            art_instance.user = request.user
-            art_instance.SYS_RevisedByAuthor = request.user
-            art_instance.SYS_ESTADO = "Revisado"
-            #art_instance.SYS_locked = True
-            art_instance.save()
-
-            return redirect('ara_revision', numeroParte=art_instance.numeroParte)
-
-
-    #enviar a btnRechazar
-    if request.method == "POST" and 'btnRechazar' in request.POST:
-        form = ArticuloForm(request.POST, instance = art_instance)
-        if form.is_valid():
-            art_instance = form.save(commit=False)
-            #art_instance.user = request.user
-            art_instance.SYS_RevisedByAuthor = request.user
-            art_instance.SYS_ESTADO = "enEdicion"
-            art_instance.SYS_locked = False
-            art_instance.save()
-
-            return redirect('ara_revision', numeroParte=art_instance.numeroParte)
-
-    #Grabar solamente
-    if request.method == "POST" and 'btnsave' in request.POST:
-        form = ArticuloForm(request.POST, instance = art_instance)
-        if form.is_valid():
-            art_instance = form.save(commit=False)
-            art_instance.user = request.user
-            art_instance.SYS_RevisedByAuthor = request.user
-            #if art_instance.SYS_ESTADO == "Cerrado":
-            #    art_instance.SYS_locked = True
-            art_instance.SYS_ESTADO = "enRevision"
-            art_instance.SYS_locked = False
-            art_instance.save()
-    else:
-        form = ArticuloForm(instance=art_instance)
-    return render(request, 'repuestos/ara_revision.html', {'form': form, 'articulo_instance': art_instance})
-
-
-
-
-
 # Pag General ___________________________________________   EDICION
 #________________________________________________________
 @login_required
@@ -289,7 +232,7 @@ def articulo_edit(request, pk ):
 
     art_instance = get_object_or_404(Articulo, pk=pk)
 
-    #enviar a revision
+    #enviar a aprobar
     if request.method == "POST" and 'btnsaveandaprobe' in request.POST:
         form = ArticuloForm(request.POST, instance = art_instance)
         if form.is_valid():
@@ -334,10 +277,94 @@ def articulo_edit(request, pk ):
             msg.attach(part2)
 
 
-            #send_mail('Especificaciones Técnicas - Pendientes para Revisión', html,'fernando.perez-ar@fmc-ag.com',  ['fernando.perez-ar@fmc-ag.com', ],  fail_silently=False,    )
-            send_mail('Especificaciones Técnicas - Pendientes para Revisión', html,'fernando.perez-ar@fmc-ag.com',  ['fernando.perez-ar@fmc-ag.com'],  fail_silently=False,    )
+            #send_mail('Pendientes para Revisión', mensaje_cuerpo,'fernando.perez-ar@fmc-ag.com',  ['fernando.perez-ar@fmc-ag.com'],  fail_silently=False,    )
+            #send_mail('Pendientes para Revisión', html,'fernando.perez-ar@fmc-ag.com',  ['fernando.perez-ar@fmc-ag.com'],  fail_silently=False,    )
+            send_mail('Especificaciones Técnicas - Pendientes para Revisión', html,'fernando.perez-ar@fmc-ag.com',  ['fernando.perez-ar@fmc-ag.com', 'mariano.gallego@fmc-ag.com'],  fail_silently=False,    )
 
 
+            mySENDGRID_API_KEY='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'
+
+
+
+            """
+            pip3 install sendgrid
+            import sendgrid
+            import os
+            from sendgrid.helpers.mail import *
+            """
+
+            """
+            sg = sendgrid.SendGridAPIClient(mySENDGRID_API_KEY)
+            from_email = Email("fernando.perez-ar@fmc-ag.com")
+            to_email = Email("fernando.perez-ar@fmc-ag.com")
+            subject = "Sending with SendGrid is Fun"
+            content = Content("text/plain", "and easy to do anywhere, even with Python")
+            mail = Mail(from_email, subject, to_email, content)
+            response = sg.client.mail.send.post(request_body=mail.get())
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
+            """
+
+            """
+            sg = sendgrid.SendGridAPIClient(mySENDGRID_API_KEY)
+            data = {
+              "personalizations": [
+                {
+                  "to": [
+                    {
+                      "email": "fernando.perez-ar@fmc-ag.com"
+                    }
+                  ],
+                  "subject": "Sending with SendGrid is Fun"
+                }
+              ],
+              "from": {
+                "email": "fernando.perez-ar@fmc-ag.com"
+              },
+              "content": [
+                {
+                  "type": "text/plain",
+                  "value": "and easy to do anywhere, even with Python"
+                }
+              ]
+            }
+            response = sg.client.mail.send.post(request_body=data)
+            """
+
+
+            """
+            import requests
+
+            headers = {'X-API-TOKEN': 'your_token_here'}
+
+            payload = {'title': 'value1', 'name': 'value2'}
+
+            r = requests.post("https://api.sendgrid.com/v3/mail/send", data=payload, headers=headers)
+            """
+
+            #headers = { 'Authorization': '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', 'Content-Type' : 'application/json',    }
+
+
+            #payload = {'personalizations': '[{"to": [{"email": "fernando.perez-ar@fmc-ag.com"}]}],"from": {"email": "kk@fmc-ag.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with cURL"}],}
+
+            #r = requests.post("https://api.sendgrid.com/v3/mail/send", data=payload, headers=headers)
+            # ENVIAR A REVISION Y APROBAR  AQUI  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            #return redirect('part_detail', pk=art_instance.pk)
+
+            """
+            import requests
+
+            headers = {
+            'Authorization': 'Bearer $SENDGRID_API_KEY',
+            'Content-Type': 'application/json',
+            }
+
+            data = '{"personalizations": [{"to": [{"email": "fernando.perez-ar@fmc-ag.com"}]}],"from": {"email": "fernando.perez-ar@fmc-ag.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain", "value": "and easy to do anywhere, even with URL"}]}'
+
+            response = requests.post('http://%3E', headers=headers, data=data)
+
+            """
 
 
 

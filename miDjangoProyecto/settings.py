@@ -139,16 +139,3 @@ MEDIA_URL = '/media/'
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 
-
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "fresenius.m.care@gmail.com"
-EMAIL_HOST_PASSWORD = 'PeraLoca2016'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-
-#EMAIL_HOST = 'smtp.sendgrid.net'
-#EMAIL_HOST_USER = 'reflexpnt'
-#EMAIL_HOST_PASSWORD = 'PeraLoca2016'
-#EMAIL_PORT = 587
-#EMAIL_USE_TLS = True
