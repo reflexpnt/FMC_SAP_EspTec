@@ -70,10 +70,10 @@ class Articulo(models.Model):
         imagen_pri = models.ImageField(upload_to = './pic_folder/', default = './no_image.png', blank=True)
         #image = models.ImageField(upload_to = 'pic_folder/', default = 'no_image.png')
 
-        marca = models.CharField(max_length=40, blank=True, default="")
-        modelo_NumParte = models.CharField(max_length=40, blank=True, default="")
-        linea = models.CharField(max_length=40, blank=True, default="")
-        comentario = models.CharField(max_length=40, blank=True, default="")
+        marca = models.CharField(max_length=50, blank=True, default="")
+        modelo_NumParte = models.CharField(max_length=50, blank=True, default="")
+        linea = models.CharField(max_length=50, blank=True, default="")
+        comentario = models.CharField(max_length=50, blank=True, default="")
 
         Reemplazable = models.BooleanField(blank=True,  default=False)
         Fab_a_Pedido = models.BooleanField(blank=True,  default=False)
@@ -81,11 +81,11 @@ class Articulo(models.Model):
 
         Ensayos = models.TextField(max_length=500, blank=True, default="")
 
-        Referencia1 = models.CharField(max_length=100, blank=True, default="")
-        Referencia2 = models.CharField(max_length=100, blank=True, default="")
-        Referencia3 = models.CharField(max_length=100, blank=True, default="")
-        Referencia4 = models.CharField(max_length=100, blank=True, default="")
-        Referencia5 = models.CharField(max_length=100, blank=True, default="")
+        Referencia1 = models.CharField(max_length=250, blank=True, default="")
+        Referencia2 = models.CharField(max_length=250, blank=True, default="")
+        Referencia3 = models.CharField(max_length=250, blank=True, default="")
+        Referencia4 = models.CharField(max_length=250, blank=True, default="")
+        Referencia5 = models.CharField(max_length=250, blank=True, default="")
 
         def __str__(self):
             return self.numeroParte

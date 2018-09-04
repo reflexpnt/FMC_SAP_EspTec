@@ -1,3 +1,0 @@
-<!-- <p><h2><a href="{% url 'part_detail' pk=articulo.pk %}">{{ articulo.numeroParte }}</a></p>  -->
-
-
