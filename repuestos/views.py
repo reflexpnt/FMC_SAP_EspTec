@@ -308,11 +308,6 @@ def articulo_edit(request, pk ):
             """
 
 
-            # Create message container - the correct MIME type is multipart/alternative.
-            msg = MIMEMultipart('alternative')
-            msg['Subject'] = "Link"
-            msg['From'] = "fernando.perez-ar@fmc-ag.com"
-            msg['To'] = "fernando.perez-ar@fmc-ag.com"
 
             # Create the body of the message (a plain-text and an HTML version).
             text = "Hi!\nHow are you?\nHere is the link you wanted:\nhttp://www.python.org"
@@ -334,8 +329,8 @@ def articulo_edit(request, pk ):
             msg.attach(part2)
 
 
-            #send_mail('Especificaciones Técnicas - Pendientes para Revisión', html,'fernando.perez-ar@fmc-ag.com',  ['fernando.perez-ar@fmc-ag.com', ],  fail_silently=False,    )
-            send_mail('Especificaciones Técnicas - Pendientes para Revisión', html,'fernando.perez-ar@fmc-ag.com',  ['fernando.perez-ar@fmc-ag.com'],  fail_silently=False,    )
+            #send_mail('Especificaciones Técnicas - Pendientes para Revisión', html,'to email',  ['to email','cc_to email'],  fail_silently=False,    )
+
 
 
 
