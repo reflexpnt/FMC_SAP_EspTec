@@ -21,6 +21,7 @@ urlpatterns = [
 
     url(r'^sapnum/(?P<numeroParte>[a-zA-Z0-9_]+)/$', views.ara_detail, name='ara_detail'),
     url(r'^revision/(?P<numeroParte>[a-zA-Z0-9_]+)/$', views.ara_revision, name='ara_revision'),
+    url(r'^aprobacion/(?P<numeroParte>[a-zA-Z0-9_]+)/$', views.ara_aprobacion, name='ara_aprobacion'),
 
 
     url(r'^accounts/', include('django.contrib.auth.urls')),

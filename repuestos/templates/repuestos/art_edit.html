@@ -112,16 +112,16 @@
     <th class="w3-center" style="border: 0px solid #00F;" width=680px>&nbsp;</th>
 
     {% if articulo_instance.SYS_ESTADO == "Inicial" %}
-        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: powderblue">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]</font></p></th>
+        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: powderblue">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]&nbsp;ult.Estado:&nbsp;{{articulo_instance.SYS_lastESTADO}}&nbsp;@{{articulo_instance.SYS_lastModif_date}}</font></p></th>
     {% endif %}
     {% if articulo_instance.SYS_ESTADO == "enEdicion" %}
-        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: rgba(255, 147, 71, 0.9);">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]</font></p></th>
+        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: rgba(255, 147, 71, 0.9);">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]&nbsp;ult.Estado:&nbsp;{{articulo_instance.SYS_lastESTADO}}&nbsp;@{{articulo_instance.SYS_lastModif_date}}</font></p></th>
     {% endif %}
     {% if articulo_instance.SYS_ESTADO == "Cerrado" %}
-        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: rgba(60, 179, 113, 0.9);">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]</font></p></th>
+        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: rgba(60, 179, 113, 0.9);">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]&nbsp;ult.Estado:&nbsp;{{articulo_instance.SYS_lastESTADO}}&nbsp;@{{articulo_instance.SYS_lastModif_date}}</font></p></th>
     {% endif %}
     {% if articulo_instance.SYS_ESTADO == "Aprobado" %}
-        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: rgba(106, 90, 205, 0.9);">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]</font></p></th>
+        <th style="border: 0px solid #000;"><strong>estado:&nbsp;</strong><span style="background-color: rgba(106, 90, 205, 0.9);">&nbsp;&nbsp;&nbsp;{{ articulo_instance.SYS_ESTADO }}&nbsp;&nbsp;&nbsp;</span><p><font size="2">&nbsp;por&nbsp;[{{articulo_instance.SYS_dataEntryAuthor.username}}]&nbsp;ult.Estado:&nbsp;{{articulo_instance.SYS_lastESTADO}}&nbsp;@{{articulo_instance.SYS_lastModif_date}}</font></p></th>
     {% endif %}
 
 
@@ -376,6 +376,8 @@
 
 
     {{ form.SYS_ESTADO }}
+    {{ form.SYS_lastESTADO }}
+    {{ form.SYS_lastModif_date }}
 
 
 </form>

@@ -1,13 +1,18 @@
 export SENDGRID_API_KEY='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'
+
+export SENDGRID_API_KEY='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'
+
 (miVirtualFMC_1) 19:46 ~/miDjangoProyecto (dataGUI_test11)$ curl --request POST \
 >   --url https://api.sendgrid.com/v3/mail/send \
 >   --header "Authorization: Bearer $SENDGRID_API_KEY" \
 >   --header 'Content-Type: application/json' \
 >   --data '{"personalizations": [{"to": [{"email": "fernando.perez-ar@fmc-ag.com"}]}],"from": {"email": "fernando.perez-ar@fmc-ag.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/pla
-in", "value": "and easy to do anywhere, even with cURL"}]}'                                                                                                                                                      
+in", "value": "and easy to do anywhere, even with cURL"}]}'
+
 (miVirtualFMC_1) 19:49 ~/miDjangoProyecto (dataGUI_test11)$ curl --request POST   --url https://api.sendgrid.com/v3/mail/send   --header "Authorization: Bearer $SENDGRID_API_KEY"   --header 'Content-Type: appl
 ication/json'   --data '{"personalizations": [{"to": [{"email": "fernando.perez-ar@fmc-ag.com"}]}],"from": {"email": "kk@fmc-ag.com"},"subject": "Sending with SendGrid is Fun","content": [{"type": "text/plain"
-, "value": "and easy to do anywhere, even with cURL"}]}'                                                                                                                                                         
+, "value": "and easy to do anywhere, even with cURL"}]}'
+
 (miVirtualFMC_1) 19:50 ~/miDjangoProyecto (dataGUI_test11)$ curl --request POST   --url https://api.sendgrid.com/v3/mail/send   --header "Authorization: Bearer $SENDGRID_API_KEY"   --header 'Content-Type: appl
-ication/json'   --data '{"personalizations": [{"to": [{"email": "mariano.gallego@fmc-ag.com"}]}],"from": {"email": "kk@fmc-ag.com"},"subject": "Prueba","content": [{"type": "text/plain", "value": "Prueba"}]}' 
+ication/json'   --data '{"personalizations": [{"to": [{"email": "mariano.gallego@fmc-ag.com"}]}],"from": {"email": "kk@fmc-ag.com"},"subject": "Prueba","content": [{"type": "text/plain", "value": "Prueba"}]}'
 (miVirtualFMC_1) 19:54 ~/miDjangoProyecto (dataGUI_test11)$

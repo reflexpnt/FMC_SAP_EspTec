@@ -108,7 +108,7 @@
     <table class="w3-table-all" style="border: 0px solid #000;">
     <thead>
     <tr class="w3-pale-red" style="border: 0px solid #000;">
-    <th class="w3-left" style="border: 0px solid #000; "  >&nbsp;<h5 class="w3-opacity">&nbsp;&nbsp;&nbsp;&nbsp;Revisión de Articulos</h5></th>
+    <th class="w3-left" style="border: 0px solid #000; "  >&nbsp;<h5 class="w3-opacity">&nbsp;&nbsp;&nbsp;&nbsp;Aprobación de Articulos</h5></th>
     <th class="w3-center" style="border: 0px solid #00F;" width=680px>&nbsp;</th>
 
     {% if articulo_instance.SYS_ESTADO == "Inicial" %}
@@ -145,25 +145,27 @@
     <table style="height: 5px; width: 1200px; margin-left: auto; margin-right: auto;" border="0" width="1200" cellspacing="0" cellpadding="3">
     <tbody>
     <tr >
-    <td   width=200px bgcolor ="#FF69B4"><font color="white"><font size="5"><strong>{{ articulo_instance.numeroParte }}</strong></td>
-    <td   width=640px bgcolor ="#FF69B4"><font color="white"><font size="5">&nbsp;{{ articulo_instance.titulo }}</td>
-    <td bgcolor = "#FF69B4"><div class="form-group">
+    <td   width=200px bgcolor ="#006600"><font color="white"><font size="5"><strong>{{ articulo_instance.numeroParte }}</strong></td>
+    <td   width=640px bgcolor ="#006600"><font color="white"><font size="5">&nbsp;{{ articulo_instance.titulo }}</td>
+    <td bgcolor = "#006600"><div class="form-group">
         <div class="col-sm-offset-1 col-xs-2">
 
             <button type="submit" name="btnRechazar" class="btn btn-primary">{% trans "Rechazar" %}</button>
 
             <button type="submit" name="btnsave" class="btn btn-primary">{% trans "Guardar" %}</button>&nbsp;&nbsp;&nbsp;&nbsp;
 
-            <button type="submit" name="btnsaveandaprobe" class="btn btn-primary">{% trans "Revisado" %}</button>
+            <button type="submit" name="btnsaveandaprobe" class="btn btn-primary">{% trans "Aprobado" %}</button>
         </div>
 
     </div></td>
     </tr>
 
     <tr >
-    <td   width=200px bgcolor ="#FF69B4"><font color="black"><font size="3">&nbsp;&nbsp;&nbsp;Notas para Edición:&nbsp; </td>
-    <td style="width: 700px;"  bgcolor="#FF69B4"><div class="col-sm-10">{{ form.SYS_Reviser_Notes | attr:"class:form-control " }}<font color="black">&nbsp;@&nbsp;{{ articulo_instance.SYS_dataEntryAuthor.username }}</div></td>
-    <td align="center"  style="width: 50px;" bgcolor="#FF69B4">&nbsp;</td>
+    <td   width=200px bgcolor ="#006600"><font color="white"><font size="3">&nbsp;&nbsp;&nbsp;Notas para Revisión:&nbsp; </td>
+    <td style="width: 700px;"  bgcolor="#006600"><div class="col-sm-10">{{ form.SYS_Reviser_Notes | attr:"class:form-control " }}<font color="white">&nbsp;@&nbsp;{{ articulo_instance.SYS_dataEntryAuthor.username }}/{{ articulo_instance.SYS_RevisedByAuthor.username }}</div></td>
+
+
+    <td align="center"  style="width: 50px;" bgcolor="#006600">&nbsp;</td>
     </tr>
 
     </tbody>

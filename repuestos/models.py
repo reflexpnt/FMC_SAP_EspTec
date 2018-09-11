@@ -5,6 +5,7 @@ from django import template
 from django.db.models.functions import Lower
 #from django.core.files.storage import default_storage
 from django.db.models import F
+from django.utils import timezone
 
 # Create your models here.
 
@@ -48,21 +49,24 @@ class Articulo(models.Model):
         SYS_EsActivo = models.BooleanField(  default=True)
         SYS_EsVisible = models.BooleanField(   default=True)
         SYS_ESTADO = models.CharField(max_length=10, choices = STATUS_CHOICES, default='Inicial')
-        SYS_dataEntryAuthor     = models.ForeignKey( User, related_name='data_entries',  blank=True, null=True)
-        SYS_RevisedByAuthor     = models.ForeignKey( User, related_name='revisers',  blank=True, null=True)
-        SYS_ApprovedByAuthor    = models.ForeignKey( User, related_name='approvers',  blank=True, null=True)
+        SYS_lastESTADO = models.CharField(max_length=10, choices = STATUS_CHOICES, default='Inicial')
+        SYS_dataEntryAuthor     = models.ForeignKey( User, related_name='data_entries',  blank=True, null=True , on_delete=models.PROTECT)
+        SYS_RevisedByAuthor     = models.ForeignKey( User, related_name='revisers',  blank=True, null=True , on_delete=models.PROTECT)
+        SYS_ApprovedByAuthor    = models.ForeignKey( User, related_name='approvers',  blank=True, null=True , on_delete=models.PROTECT)
 
         SYS_Approver_Notes = models.CharField(max_length=250, blank=True, default="")
         SYS_Reviser_Notes  = models.CharField(max_length=250, blank=True, default="")
 
 
         SYS_locked = models.BooleanField(blank=True,  default=False)
+        SYS_lastModif_date = models.DateTimeField( default=timezone.now, blank=True, null=True)
+
 
         ordering = ['SYS_Prioridad']
         numeroParte = models.CharField(max_length=15 , blank=False, default="ARA"  )
         titulo = models.CharField(max_length=250, blank=False, default="sin título" )
         unidad = models.CharField(max_length=4, choices=UNIT_CHOICES, default='UN')
-        Descripcion = models.TextField(max_length=500, blank=True,  default="")
+        Descripcion = models.TextField(max_length=500, blank=True,  default="") # incrementar cantidad
 
 
 

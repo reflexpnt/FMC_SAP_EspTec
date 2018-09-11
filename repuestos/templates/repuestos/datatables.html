@@ -159,9 +159,9 @@
 
                             //{ "data": "fields.imagen_pri" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/media/'+ data +'"><img border="0"  src="http://freseniusmedicalcare.pythonanywhere.com/media/'+ data +'" width="50" ></a>';}},
 
-                            { "data": "pk" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/pdf/'+ data +'/"><img border="0" alt="PDF" src=../media/datasheet.png width="20" ></a>';}},
-                            //{ "data": "pk" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/art/'+ data +'/edit"><img border="0" alt="edit" src=../media/edit_icon2.png width="15" ></a>';}}
-                            { "data": "fields.numeroParte" ,  "width": "5%" ,"render": function (data ) {return '<a href="/sapnum/'+ data +'"><img border="0" alt="edit" src=../media/edit_icon2.png width="15" ></a>';}   }
+                            { "data": "pk" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/pdf/'+ data +'/"><img border="0" alt="PDF" src=http://freseniusmedicalcare.pythonanywhere.com/media/datasheet.png width="30" height="30"></a>';}},
+                            //{ "data": "pk" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/pdf/'+ data +'/"><img border="0" alt="PDF" src=http://freseniusmedicalcare.pythonanywhere.com/media/datasheet.png width="20" ></a>';}},
+                            { "data": "fields.numeroParte" ,  "width": "5%" ,"render": function (data ) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/sapnum/'+ data +'"><img border="0" alt="edit" src=http://freseniusmedicalcare.pythonanywhere.com/media/edit_icon2.png width="15" ></a>';}   }
                          ]
                  });
              });
@@ -219,7 +219,7 @@
     <tr >
     <td   width=350px bgcolor ="#0000e6"><font color="white">&nbsp;&nbsp;Fresenius Lista Repuestos</td>
     <td   width=750px bgcolor ="#0000e6"><font color="white"></td>
-    <td   align="left" bgcolor = "#0000e6"><font color="white">{{ articulosLOCAL_count }} articulos Locales de {{ articulos_count }} en DB</td>
+    <td   align="left" bgcolor = "#0000e6"><a  href="http://freseniusmedicalcare.pythonanywhere.com/test"><font color="white">{{ articulosLOCAL_count }} articulos Locales de {{ articulos_count }} en DB</a></td>
     </tr>
 
     </tbody>
