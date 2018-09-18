@@ -1,0 +1,147 @@
+import numpy as np
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'numpy'
+>>> from PIL import Image
+>>> 
+>>> filename = 'https://www.pythonanywhere.com/user/FreseniusMedicalCare/files/home/FreseniusMedicalCare/miDjangoProyecto/media/no_image.png'
+>>> im= Image.open(filename)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/FreseniusMedicalCare/.virtualenvs/miVirtualFMC_1/lib/python3.6/site-packages/PIL/Image.py", line 2580, in open
+    fp = builtins.open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'https://www.pythonanywhere.com/user/FreseniusMedicalCare/files/home/FreseniusMedicalCare/mi
+DjangoProyecto/media/no_image.png'
+>>> filename = './miDjangoProyecto/media/no_image.png'                                                                                              
+>>> im= Image.open(filename)                                                                                                                        
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/FreseniusMedicalCare/.virtualenvs/miVirtualFMC_1/lib/python3.6/site-packages/PIL/Image.py", line 2580, in open
+    fp = builtins.open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: './miDjangoProyecto/media/no_image.png'
+>>> filename = '/home/FreseniusMedicalCare/miDjangoProyecto/media/no_image.png'                                                                     
+>>> im= Image.open(filename)
+>>> im.save("/home/FreseniusMedicalCare/miDjangoProyecto/media/fer.png")
+>>> im.close()
+>>> 
+
+
+
+
+
+
+>>> from PIL import Image
+>>> 
+>>> filename = 'https://www.pythonanywhere.com/user/FreseniusMedicalCare/files/home/FreseniusMedicalCare/miDjangoProyecto/media/no_image.png'
+>>> im= Image.open(filename)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/FreseniusMedicalCare/.virtualenvs/miVirtualFMC_1/lib/python3.6/site-packages/PIL/Image.py", line 2580, in open
+    fp = builtins.open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'https://www.pythonanywhere.com/user/FreseniusMedicalCare/files/home/FreseniusMedicalCare/mi
+DjangoProyecto/media/no_image.png'
+>>> filename = './miDjangoProyecto/media/no_image.png'                                                                                              
+>>> im= Image.open(filename)                                                                                                                        
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/FreseniusMedicalCare/.virtualenvs/miVirtualFMC_1/lib/python3.6/site-packages/PIL/Image.py", line 2580, in open
+    fp = builtins.open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: './miDjangoProyecto/media/no_image.png'
+>>> filename = '/home/FreseniusMedicalCare/miDjangoProyecto/media/no_image.png'                                                                     
+>>> im= Image.open(filename)
+>>> im.save("/home/FreseniusMedicalCare/miDjangoProyecto/media/fer.png")
+>>> im.close()
+>>> exit()
+(miVirtualFMC_1) 14:02 ~/miDjangoProyecto (0.92)$ python manage.py shell
+Python 3.6.0 (default, Jan 13 2017, 00:00:00) 
+[GCC 4.8.4] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from PIL import Image
+>>> filename = '/home/FreseniusMedicalCare/miDjangoProyecto/media/no_image.png'
+>>> im= Image.open(filename)
+>>> im.save("/home/FreseniusMedicalCare/miDjangoProyecto/media/fer3.png")
+>>> im.close()
+>>> from repuestos.models import Articulo
+>>> selecionados = Articulo.objects.filter(imagen_Pri_Nombre='./no_image.png')                                                                      
+>>> sel_cnt = selecionados.count()
+>>> sel_cnt
+2438
+>>> selecionados
+
+
+
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from repuestos.models import Articulo
+>>> selecionados = Articulo.objects.get(numeroParte="2842561NAR")                                                                                   
+>>> selecionados 
+<Articulo: 2842561NAR>
+>>> selecionados.titulo
+'ORGANIZER STAY SAFE'
+>>> selecionados.numeroParte
+'2842561NAR'
+>>> 
+
+
+C 4.8.4] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from repuestos.models import Articulo
+>>> selecionados = Articulo.objects.get(numeroParte="2842561NAR")                                                                                   
+>>> selecionados 
+<Articulo: 2842561NAR>
+>>> selecionados.titulo
+'ORGANIZER STAY SAFE'
+>>> selecionados.numeroParte
+'2842561NAR'
+>>> from PIL import Image
+>>> filename = '/home/FreseniusMedicalCare/miDjangoProyecto/media/no_image.png'
+>>> im= Image.open(filename)
+>>> im.save("/home/FreseniusMedicalCare/miDjangoProyecto/media/" + selecionados.numeroParte + ".png")
+>>> im.close()
+
+selecionados = Articulo.objects.filter(numeroParte__in=["2842561NAR", "ARA281001"])            
+>>> seleccionados
+
+
+________________________________________________________________________________________________
+
+from repuestos.models import Articulo
+>>> selecionados = Articulo.objects.filter(numeroParte__in=["2842561NAR", "ARA281001"])
+>>> selecionados
+<QuerySet [<Articulo: 2842561NAR>, <Articulo: ARA281001>]>
+>>> for sel in selecionados:
+...     print sel.titulo
+  File "<console>", line 2
+    print sel.titulo
+            ^
+SyntaxError: Missing parentheses in call to 'print'
+>>> for sel in selecionados:
+...     print( sel.titulo)
+... 
+ORGANIZER STAY SAFE
+Cabezal Performa 273 Streamline c/timer logix 764
+>>> from PIL import Image
+>>> filename = '/home/FreseniusMedicalCare/miDjangoProyecto/media/no_image.png'
+>>> im= Image.open(filename)
+>>> for sel in selecionados:
+...     im.save("/home/FreseniusMedicalCare/miDjangoProyecto/media/" + sel.numeroParte + ".png")                                                    
+... 
+>>> im.close()
+>>> 
+
+from PIL import Image
+from repuestos.models import Articulo
+
+filename = '/home/FreseniusMedicalCare/miDjangoProyecto/media/no_image.png'
+im= Image.open(filename)
+
+selecionados = Articulo.objects.filter(imagen_Pri_Nombre='./no_image.png', SYS_local=1)
+sel_cnt = selecionados.count()
+
+for sel in selecionados:
+    im.save("/home/FreseniusMedicalCare/miDjangoProyecto/media/test/" + sel.numeroParte + ".png")
+
+im.close()
+exit()

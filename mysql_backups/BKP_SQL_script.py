@@ -5,9 +5,9 @@ from zipfile import ZipFile
 DAYS_TO_KEEP_BACKUP = 3
 
 
-BACKUP_DIR_NAME = "mysql_backups"
+BACKUP_DIR_NAME = "/home/FreseniusMedicalCare/miDjangoProyecto/mysql_backups/"
 FILE_PREFIX = "DB_backup_"
-FILE_SUFFIX_DATE_FORMAT = "%d%m%Y-%H%M%S"
+FILE_SUFFIX_DATE_FORMAT = "%d-%m-%Y_%H.%M.%S"
 USERNAME_LONG = "FreseniusMedicalCare"
 USERNAME_SHORT = "FreseniusMedical"
 DBNAME = USERNAME_SHORT+"$BaseDatos1"
@@ -21,10 +21,10 @@ os.system("mysqldump -u "+USERNAME_SHORT+" -h "+USERNAME_LONG+".mysql.pythonanyw
 
 
 # creating zip file
-zip_filename = BACKUP_DIR_NAME+"/"+FILE_PREFIX+timestamp+".zip"
-with ZipFile(zip_filename, 'w') as zip:
-    zip.write(backup_filename, os.path.basename(backup_filename))
-    
+#zip_filename = BACKUP_DIR_NAME+"/"+FILE_PREFIX+timestamp+".zip"
+#with ZipFile(zip_filename, 'w') as zip:
+#    zip.write(backup_filename, os.path.basename(backup_filename))
+
 #os.remove(backup_filename)
 
 

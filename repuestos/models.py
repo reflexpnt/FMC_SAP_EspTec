@@ -48,6 +48,7 @@ class Articulo(models.Model):
         SYS_Prioridad = models.CharField(max_length=8, choices=PRIORITY_CHOICES, default='1')
         SYS_EsActivo = models.BooleanField(  default=True)
         SYS_EsVisible = models.BooleanField(   default=True)
+        SYS_EsOBSOLETO = models.BooleanField(  default=False)   # ej ARA290151
         SYS_ESTADO = models.CharField(max_length=10, choices = STATUS_CHOICES, default='Inicial')
         SYS_lastESTADO = models.CharField(max_length=10, choices = STATUS_CHOICES, default='Inicial')
         SYS_dataEntryAuthor     = models.ForeignKey( User, related_name='data_entries',  blank=True, null=True , on_delete=models.PROTECT)

@@ -1,0 +1,13 @@
+reportlab  # para pdf
+t
+
+
+pip install widget_tweaks
+'widget_tweaks',
+    #"anymail",
+
+pip install django-import-export
+INSTALLED_APPS = (
+    ...
+    'import_export',
+)

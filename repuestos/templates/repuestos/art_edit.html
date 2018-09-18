@@ -91,7 +91,7 @@
 
 
 
-    <table style="height: 5px; width: 100%; margin-left: auto; margin-right: auto;" border="0" width="1200" cellspacing="0" cellpadding="0">
+    <table style="height: 5px; width: 100%; margin-left: auto; margin-right: auto;" border="1" width="1200" cellspacing="0" cellpadding="0">
     <tbody>
     <tr >
     <td   width=320px bgcolor ="#0000e6"><font color="white">&nbsp;&nbsp;</td>
@@ -108,7 +108,7 @@
     <table class="w3-table-all" style="border: 0px solid #000;">
     <thead>
     <tr class="w3-pale-red" style="border: 0px solid #000;">
-    <th class="w3-left" style="border: 0px solid #000; "  >&nbsp;<h5 class="w3-opacity">&nbsp;&nbsp;&nbsp;&nbsp;Edición de Articulos</h5></th>
+    <th class="w3-left" style="border: 0px solid #000; " width=250px >&nbsp;<h5 class="w3-opacity">&nbsp;&nbsp;&nbsp;&nbsp;Edición de Articulos</h5></th>
     <th class="w3-center" style="border: 0px solid #00F;" width=680px>&nbsp;</th>
 
     {% if articulo_instance.SYS_ESTADO == "Inicial" %}
@@ -129,6 +129,11 @@
     </tr>
     </thead>
     </table>
+
+
+    {% if articulo_instance.SYS_EsOBSOLETO == True %}
+    <p style='position:fixed; color: rgb(244, 98, 66, 0.75);font-size: 82pt;-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);left:center;'><strong>&nbsp;&nbsp;OBSOLETO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</strong></p>
+    {% endif %}
 
     <div><br><br></div>
 
@@ -223,13 +228,13 @@
     <tbody>
     <tr >
     <td width=5px >&nbsp;</td>
-    <td class="special" width=250px valign="center"><img src=http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/{{ articulo_instance.imagen_Pri_Nombre }} width="250"  /></td>
+    <td class="special" width=250px valign="center"><img src="http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/{{ articulo_instance.numeroParte  }}.png" width="250"  /></td>
     <td width=5px >&nbsp;</td>
     <td valign="center" align="left"><div class="form-group"><div class="col-sm-12">{{ form.Descripcion | attr:"class:form-control " }}</div></div></td>
     </tr>
     <tr >
     <td >&nbsp;</td>
-    <td align="center" >{{ articulo_instance.imagen_Pri_Nombre }}</td>
+    <td align="center" >{{ articulo_instance.numeroParte }}.png</td>
     <td >&nbsp;</td>
     <td >&nbsp;</td>
     </tr>

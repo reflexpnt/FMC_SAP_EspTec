@@ -3,17 +3,24 @@ from .models import Articulo
 #from .models import Image
 from .models import Image_Art_pri
 from django.contrib.auth.models import User
+#from .resource import ArticuloResource
 ### ==================
 ### admin.py
 ### ==================
 
-from django.contrib import admin
+
 from . import models
+from import_export.admin import  ImportExportMixin
 
 
 
 
-class ArticuloAdmin(admin.ModelAdmin):
+
+
+#class ArticuloAdmin(admin.ModelAdmin ):
+class ArticuloAdmin(ImportExportMixin, admin.ModelAdmin  ):
+  #resource_class = ArticuloResource
+  #pass
   list_display = ('numeroParte', 'titulo', 'unidad', 'SYS_Prioridad','SYS_local','SYS_locked','SYS_ESTADO','SYS_dataEntryAuthor','SYS_RevisedByAuthor','SYS_ApprovedByAuthor', 'imagen_Pri_Nombre' , 'SYS_EsActivo', 'SYS_EsVisible', 'SYS_lastModif_date')
   ordering = ('-SYS_Prioridad','-SYS_local','numeroParte',) # The negative sign indicate descendent order
   search_fields = ('numeroParte', 'titulo',  )
@@ -39,7 +46,9 @@ class GalleryAdmin(admin.ModelAdmin):
 
 
 ### =============================================================================================
-admin.site.register(Articulo, ArticuloAdmin)
+admin.site.register(Articulo, ArticuloAdmin )
+
+
 
 #admin.site.register(Articulo)
 admin.site.register(Image_Art_pri)

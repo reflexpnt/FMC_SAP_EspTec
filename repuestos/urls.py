@@ -34,7 +34,8 @@ urlpatterns = [
 
 
 
-    url(r'^test/$', views.test_pdf, name='test_pdf'),
+    url(r'^reporte/$', views.reporte, name='reporte'),
+    url(r'^export/$', views.export, name='export'),
 
 ]
 

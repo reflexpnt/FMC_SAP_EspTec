@@ -130,6 +130,14 @@
     </thead>
     </table>
 
+
+
+
+    {% if articulo_instance.SYS_EsOBSOLETO == True %}
+    <p style='position:fixed; color: rgb(244, 98, 66, 0.75);font-size: 82pt;-webkit-transform: rotate(-45deg);-moz-transform: rotate(-45deg);left:center;'><strong>&nbsp;&nbsp;OBSOLETO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.</strong></p>
+    {% endif %}
+
+
     <div><br><br></div>
 
 
@@ -236,13 +244,13 @@
     <tbody>
     <tr >
     <td width=5px >&nbsp;</td>
-    <td class="special" width=250px valign="center"><img src=http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/{{ articulo_instance.imagen_Pri_Nombre }} width="250"  /></td>
+    <td class="special" width=250px valign="center"><img src="http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/{{ articulo_instance.numeroParte  }}.png" width="250"  /></td>
     <td width=5px >&nbsp;</td>
     <td valign="center" align="left"><div class="form-group"><div class="col-sm-12">{{ form.Descripcion | attr:"class:form-control " }}</div></div></td>
     </tr>
     <tr >
     <td >&nbsp;</td>
-    <td align="center" >{{ articulo_instance.imagen_Pri_Nombre }}</td>
+    <td align="center" >{{ articulo_instance.numeroParte }}.png</td>
     <td >&nbsp;</td>
     <td >&nbsp;</td>
     </tr>

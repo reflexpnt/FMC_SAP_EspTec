@@ -119,7 +119,7 @@
                      "columns": [
                              //{ "data": "pk" ,"render": function (data) {return '<a href="'+ data +'">'+ data +'</a>';}},
                              { "data": "fields.numeroParte" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/'+ data +'.png"><img border="0"  src="http://freseniusmedicalcare.pythonanywhere.com/media/pic_folder/'+ data +'.png" width="50" ></a>';}},
-                             { "data": "fields.numeroParte" ,  "width": "10%" ,"render": function (data ) {return '<a href="/sapnum/'+ data +'"><strong>'+ data +'</strong></a>';}   },
+                             { "data": "fields.numeroParte" ,  "width": "10%" ,"render": function (data ) {return '<a target="_blank" rel="noopener noreferrer" href="/sapnum/'+ data +'"><strong>'+ data +'</strong></a>';}   },
                              // { "data": "pk" ,"render": function (data) {return '<a href="http://freseniusmedicalcare.pythonanywhere.com/pdf/'+ data +'/"><img border="0" alt="PDF" src=../media/datasheet.png width="20" ></a>';}},
                              { "data": "fields.titulo" },
                              { "data": "fields.unidad" },
@@ -219,7 +219,7 @@
     <tr >
     <td   width=350px bgcolor ="#0000e6"><font color="white">&nbsp;&nbsp;Fresenius Lista Repuestos</td>
     <td   width=750px bgcolor ="#0000e6"><font color="white"></td>
-    <td   align="left" bgcolor = "#0000e6"><a  href="http://freseniusmedicalcare.pythonanywhere.com/test"><font color="white">{{ articulosLOCAL_count }} articulos Locales de {{ articulos_count }} en DB</a></td>
+    <td   align="left" bgcolor = "#0000e6"><a target="_blank" rel="noopener noreferrer" href="http://freseniusmedicalcare.pythonanywhere.com/reporte"><font color="white">{{ articulosLOCAL_count }} articulos Locales de {{ articulos_count }} en DB</a></td>
     </tr>
 
     </tbody>

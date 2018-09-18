@@ -1,0 +1,3 @@
+zip -r /home/FreseniusMedicalCare/miDjangoProyecto.zip  /home/FreseniusMedicalCare/miDjangoProyecto/*
+
+python /home/FreseniusMedicalCare/miDjangoProyecto/mysql_backups/BKP_SQL_script.py
